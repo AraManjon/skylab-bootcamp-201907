@@ -16,7 +16,7 @@ module.exports = new Schema({
     DateCreate: {
         type: Date
     },
-    userCreator: {
+     userCreator: {
         type: [{ type: ObjectId, ref: 'User' }]
     }
 })

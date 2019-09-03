@@ -1,4 +1,5 @@
 const { models: { User } } = require('rate-data')
+/* const { validate }= require('../../rate-utils/') */
 
 /**
  * Registers a user.
@@ -11,13 +12,13 @@ const { models: { User } } = require('rate-data')
  * @returns {Promise}
  */
 module.exports = function (name, surname, username, email, password) {
-    validate.string(name,'name')
+    /* validate.string(name,'name')
     validate.string(surname,'surname')
     validate.string(username,'username')
     validate.string(email,'email')
     validate.email(email,'email')
     validate.string(password,'password')
-    validate.password(password,'password')
+    validate.password(password,'password') */
 
     return User.findOne({ email })
         .then(user => {

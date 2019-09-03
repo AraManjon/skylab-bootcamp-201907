@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const { Schema } = mongoose
+const { Schema, ObjectId } = mongoose
 
 module.exports = new Schema({
     comment:{
@@ -9,7 +9,14 @@ module.exports = new Schema({
     response: {
         type: String
     },
-    rateNum:{
-        type: Number
+    voteRealised:{
+        type: Number,
+        required: true
+    },
+    DateCreate: {
+        type: Date
+    },
+    userCreator: {
+        type: [{ type: ObjectId, ref: 'User' }]
     }
 })

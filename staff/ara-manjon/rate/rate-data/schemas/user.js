@@ -28,13 +28,13 @@ module.exports = new Schema({
     image: {
         type: String
     },
-    reviews: {
+    reviewsRecibed: {
         type: [{ type: ObjectId, ref: 'Review' }]
     },
     rate: {
         type: Number 
     },
-    votes: {
+    voters: {
         type: Number
     }
 })

@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 
-const { Schema } = mongoose
-const Card = require('./card')
+const { Schema , ObjectId } = mongoose
 
 module.exports = new Schema({
     name: {
@@ -29,11 +28,13 @@ module.exports = new Schema({
     image: {
         type: String
     },
-    comments: {
-        type: String,
+    reviews: {
+        type: [{ type: ObjectId, ref: 'Review' }]
     },
     rate: {
-        type: Number
+        type: Number 
     },
-    users: [User]
+    votes: {
+        type: Number
+    }
 })

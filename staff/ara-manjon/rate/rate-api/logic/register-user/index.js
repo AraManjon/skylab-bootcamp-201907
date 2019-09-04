@@ -25,6 +25,10 @@ module.exports = function (name, surname, username, email, password) {
         const user = await User.findOne({ email })
         
         if (user) throw Error('User already exists.')
+
+        const _user = await User.findOne({ username })
+
+        if (_user)throw Error('Username is in use')
             
         await User.create({name, surname, username, email, password})
         return user

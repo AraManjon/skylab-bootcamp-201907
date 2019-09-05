@@ -38,7 +38,7 @@ const { validate }= require('rate-utils')
     })()
 } */
 
-module.exports = function(name, surname, username, email, password, longitude, latitude) {
+module.exports = function(name, surname, username, email, password) {
     validate.string(name,'name')
     validate.string(surname,'surname')
     validate.string(username,'username')
@@ -56,7 +56,7 @@ module.exports = function(name, surname, username, email, password, longitude, l
 
         if (_user)throw Error('Username is in use')
             
-        await User.create({name, surname, username, email, password, longitude, latitude})
+        await User.create({name, surname, username, email, password})
         return user
     })()
 }

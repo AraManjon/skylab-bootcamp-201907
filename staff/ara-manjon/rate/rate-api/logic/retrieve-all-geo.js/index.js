@@ -1,23 +1,24 @@
 const { models: { User } } = require('rate-data')
 const { validate }= require('rate-utils')
       /**
-       * Retrieves a user by its id.
+       * Retrieves users by geolocation respect a coordenates of id user.
        * 
        * @param {string} id The id its given by authenticateUser
        * 
        * @returns {Promise}
        * 
-       * Returns a user
        */
 module.exports = function (id){
-    validate.string(id,'id')
-    
+    validate.string(id,'id')    
         return (async () => {            
-            const user= await User.findOne({ _id: id}, { _id: 0, password: 0 } ).lean()
-            
+            const user = await User.findOne({ _id: id}, { _id: 0, password: 0 } ).lean()
             if (!user) throw new Error(`user with id ${id} not found`)
+            const location = user.location
+            if (!location) throw new Error(`user location with id ${id} not found`)
+            
 
-            user.id = id
-            return user
+
+/*             user.id = id
+            return user */
             })()    
 }

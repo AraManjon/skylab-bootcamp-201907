@@ -10,7 +10,7 @@ const { env: { DB_URL_TEST }} = process
 describe('logic - register user', () => {
     before(() =>  database.connect(DB_URL_TEST))
   
-    let name, surname, username,email, password, longitude, latitude
+    let name, surname, username,email, password
     let _name, _surname, _username,_email, _password
     beforeEach(async () => {
         name = `name-${Math.random()}`
@@ -18,8 +18,7 @@ describe('logic - register user', () => {
         username = `username-${Math.random()}`
         email = `email-${Math.random()}@domain.com`
         password = `password-${Math.random()}`
-        longitude= 2.1998465
-        latitude= 41.398457
+
 
        
 
@@ -28,10 +27,11 @@ describe('logic - register user', () => {
         _username = `username-${Math.random()}`
         _email = `email-${Math.random()}@domain.com`
         _password = `password-${Math.random()}`
+
         await User.deleteMany()
     })
     it('should succeed on correct data', async () => {
-        const result = await registerUser(name, surname, username, email, password, longitude, latitude)
+        const result = await registerUser(name, surname, username, email, password)
             
         expect(result).not.to.exist
         const user = await User.findOne({ email })
@@ -41,7 +41,7 @@ describe('logic - register user', () => {
         expect(user.surname).to.equal(surname)
         expect(user.username).to.equal(username)
         expect(user.email).to.equal(email)
-        expect(user.password).to.eq(password)
+        expect(user.password).to.equal(password)
     })
     it('should fail if the username is in use', async () =>{
         try{

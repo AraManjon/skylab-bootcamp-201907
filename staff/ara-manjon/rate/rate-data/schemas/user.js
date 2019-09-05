@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 const { Schema , ObjectId } = mongoose
+const Nears = require('./nears')
 
 module.exports = new Schema({
     name: {
@@ -19,7 +20,8 @@ module.exports = new Schema({
         type: String,
         required: true,
         lowercase: true,
-        match: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        match: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+       
     },
     password: {
         type: String,
@@ -28,13 +30,20 @@ module.exports = new Schema({
     image: {
         type: String
     },
-    reviewsRecibed: {
+    reviews: {
         type: [{ type: ObjectId, ref: 'Review' }]
     },
-    rate: {
-        type: Number 
-    },
-    voters: {
-        type: Number
-    }
+    nears: Nears,
+    location: {
+        type: {
+          type: String, 
+          enum: ['Point']
+         /*  required: true */
+        },
+        coordinates: {
+          type: [Number],
+          default: []
+  /*         required: true */
+        }
+      }
 })

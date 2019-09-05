@@ -9,8 +9,8 @@ const { env: { DB_URL_TEST }} = process
 
 describe('logic - register user', () => {
     before(() =>  database.connect(DB_URL_TEST))
-        
-    let name, surname, username,email, password
+  
+    let name, surname, username,email, password, longitude, latitude
     let _name, _surname, _username,_email, _password
     beforeEach(async () => {
         name = `name-${Math.random()}`
@@ -18,6 +18,9 @@ describe('logic - register user', () => {
         username = `username-${Math.random()}`
         email = `email-${Math.random()}@domain.com`
         password = `password-${Math.random()}`
+        longitude= 2.1998465
+        latitude= 41.398457
+
        
 
         _name = `name-${Math.random()}`
@@ -28,7 +31,7 @@ describe('logic - register user', () => {
         await User.deleteMany()
     })
     it('should succeed on correct data', async () => {
-        const result = await registerUser(name, surname, username, email, password)
+        const result = await registerUser(name, surname, username, email, password, longitude, latitude)
             
         expect(result).not.to.exist
         const user = await User.findOne({ email })

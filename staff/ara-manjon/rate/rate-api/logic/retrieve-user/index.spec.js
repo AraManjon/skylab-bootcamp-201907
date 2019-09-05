@@ -33,6 +33,7 @@ describe('logic - retrieve user', () => {
         expect(user.surname).to.equal(surname)
         expect(user.email).to.equal(email)
         expect(user.password).not.to.exist
+        expect(user.location).to.exist
         })
         it('should fail on email does not exist', async () => {
             try{

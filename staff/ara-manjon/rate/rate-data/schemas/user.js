@@ -19,7 +19,8 @@ module.exports = new Schema({
         type: String,
         required: true,
         lowercase: true,
-        match: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        match: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+       
     },
     password: {
         type: String,
@@ -31,10 +32,16 @@ module.exports = new Schema({
     reviews: {
         type: [{ type: ObjectId, ref: 'Review' }]
     },
-    rate: {
-        type: Number 
-    },
-    votes: {
-        type: Number
-    }
+    location: {
+        type: {
+          type: String, 
+          enum: ['Point']
+         /*  required: true */
+        },
+        coordinates: {
+          type: [Number],
+          default: []
+  /*         required: true */
+        }
+      }
 })

@@ -1,5 +1,5 @@
 const { expect } = require('chai')
-const validate = require('..')
+const validate = require('./index')
 
 const {
     random
@@ -9,23 +9,23 @@ describe('logic - validate', () => {
     describe('string', () => {
         it('should succeed on correct string', () => {
             const result = validate.string('query', 'string')
-            expect(result).toBeUndefined()
+            expect(result).not.exist
 
         })
         it('should fail on non correct string', () => {
             expect(() =>
-                validate.string(123, 'string')).toThrowError(Error, `string with value 123 is not a string`)
+                validate.string(123, 'string')).to.throw(Error, `string with value 123 is not a string`)
 
         })
         it('should fail on empty string', () => {
             expect(() =>
-                validate.string('', 'string')).toThrowError(Error, `string is empty or blank`)
+                validate.string('', 'string')).to.throw(Error, `string is empty or blank`)
 
         })
 
         it('should fail on empty string', () => {
             expect(() =>
-                validate.string('', 'string')).toThrowError(Error, `string is empty or blank`)
+                validate.string('', 'string')).to.throw(Error, `string is empty or blank`)
 
         })
 
@@ -33,12 +33,12 @@ describe('logic - validate', () => {
     describe('email', () => {
         it('should succeed on correct email', () => {
             const result = validate.email('John-' + random() + '@gmail.com', 'string')
-            expect(result).toBeUndefined()
+            expect(result).to.not.exist
 
         })
         it('should fail on non correct email', () => {
             expect(() =>
-                validate.email(123, 'email')).toThrowError(Error, `email with value 123 is not a valid e-mail`)
+                validate.email(123, 'email')).to.throw(Error, `email with value 123 is not a valid e-mail`)
 
         })
 
@@ -47,113 +47,53 @@ describe('logic - validate', () => {
     describe('URL', () => {
             it('should succeed on correct URL', () => {
                 const result = validate.url('https://developer.mozilla.org/es/', 'string')
-                expect(result).toBeUndefined()
+                expect(result).to.not.exist
 
             })
             it('should fail on non correct URL', () => {
                 expect(() =>
-                    validate.url(123, 'url')).toThrowError(Error, `url with value 123 is not a valid URL`)
+                    validate.url(123, 'url')).to.throw(Error, `url with value 123 is not a valid URL`)
 
             })
         })
 
-    describe('Boolen', () => {
+    describe('Boolean', () => {
             it('should succeed on correct Boolean', () => {
                 const result = validate.boolean(true, 'boolean')
-                expect(result).toBeUndefined()
+                expect(result).to.not.exist
 
             })
             it('should fail on non correct Boolean', () => {
                 expect(() =>
-                    validate.url('true', 'boolean')).toThrowError(Error, `boolean with value 'true' is not a boolean`)
+                    validate.boolean('true', 'boolean')).to.throw(Error, `boolean with value true is not a boolean`)
 
             })
         })
     describe('Number', () => {
             it('should succeed on correct Number', () => {
                 const result = validate.number(123, 'number')
-                expect(result).toBeUndefined()
+                expect(result).to.not.exist
 
             })
             it('should fail on non correct Number', () => {
                 expect(() =>
-                    validate.url('123', 'number')).toThrowError(Error, `number with value '123' is not a number`)
+                    validate.number('123', 'number')).to.throw(Error, `number with value 123 is not a number`)
 
             })
         })
+     describe('Date', ()=>{
+        it('should succeed on correct Date', () => {
+            const newDate= new Date()
+            const result = validate.date(newDate, 'date')
+            expect(result).to.not.exist
+        })
+        it('should fail on non correct Date', () => {
+            const _newDate= 'Thu Sep 05 2019 13:16:53 GMT+0200'
+            expect(() =>
+                    validate.date(_newDate, 'date')).to.throw(Error, 'date with value Thu Sep 05 2019 13:16:53 GMT+0200 is not a date')
+        })
+
+    }) 
+
 
 })
-
-/* {
-    const { random } = Math
-    describe('logic - validate', ()=>{
-        describe('string', ()=>{
-            it('should succeed on correct string', () =>{
-                const result = validate.string('query','string')
-                expect(result).toBeUndefined()
-                
-            })
-            it('should fail on non correct string', () =>{
-                expect(() =>
-                validate.string(123,'string')).toThrowError(Error, `string with value 123 is not a string`)
-                
-            })
-            it('should fail on empty string', () =>{
-                expect(() =>
-                validate.string('','string')).toThrowError(Error, `string is empty or blank`)
-                
-            })
-    
-            it('should fail on empty string', () =>{
-                expect(() =>
-                validate.string('','string')).toThrowError(Error, `string is empty or blank`)
-                
-            })
-            it('should fail on empty string', () =>{
-                expect(() =>
-                validate.string( '','string')).toThrowError(Error, `string with value  does not match one of the expected values: `)
-                
-            })
-    
-        })
-        describe('email', ()=>{
-            it('should succeed on correct email', () =>{
-                const result = validate.password('John-'+random()+'@gmail.com','string')
-                expect(result).toBeUndefined()
-                
-            })
-            it('should fail on non correct email', () =>{
-                expect(() =>
-                validate.email(123,'email')).toThrowError(Error, `email with value 123 is not a valid e-mail`)
-                
-            })
-    
-        })
-        describe('password', ()=>{
-            it('should succeed on correct password', () =>{
-                const result = validate.password('123abc','password')
-                expect(result).toBeUndefined()
-                
-            })
-            it('should fail on non correct password', () =>{
-                expect(() =>
-                validate.password(123,'password')).toThrowError(Error, `password is not a valid password. The string must contain at least 1 numeric character, 1 alphabetical character and must be six characters or longer`)
-                
-            })
-        })
-    
-        describe('URL', ()=>{
-            it('should succeed on correct URL', () =>{
-                const result = validate.url('https://developer.mozilla.org/es/','string')
-                expect(result).toBeUndefined()
-                
-            })
-             it('should fail on non correct URL', () =>{
-                expect(() =>
-                validate.url(123,'url')).toThrowError(Error, `url with value 123 is not a valid URL`)
-                
-            })
-        })
-    
-    })
-    } */

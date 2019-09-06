@@ -1,15 +1,26 @@
 const mongoose = require('mongoose')
 
-const { Schema } = mongoose
+const {
+    Schema,
+    ObjectId
+} = mongoose
+
+const Response = require('./response')
 
 module.exports = new Schema({
-    comment:{
+    comment: {
         type: String
     },
-    response: {
-        type: String
+    response: Response,
+    rate: {
+        type: Number,
+        required: true
     },
-    rateNum:{
-        type: Number
+    date: {
+        type: Date
+    },
+    author: {
+        type: ObjectId,
+        ref: 'User'
     }
 })

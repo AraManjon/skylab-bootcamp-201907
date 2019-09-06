@@ -1,7 +1,7 @@
 const logic = require('../logic')
 
 module.exports = function (req, res) {
-    const { params: { id }, longitude, latitude} = req
+    const { params: { id }, body: {longitude, latitude} }= req
 
     try {
         logic.updateGeo(id, longitude, latitude)

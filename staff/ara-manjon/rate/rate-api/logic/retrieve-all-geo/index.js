@@ -8,17 +8,17 @@ const { validate }= require('rate-utils')
        * @returns {Promise}
        * 
        */
-module.exports = function (id){
-    validate.string(id,'id')    
+module.exports = function (id, distance){
+    validate.string(id,'id')   
         return (async () => {            
             const user = await User.findOne({ _id: id}, { _id: 0, password: 0 } ).lean()
             if (!user) throw new Error(`user with id ${id} not found`)
-            const location = user.location
-            if (!location) throw new Error(`user location with id ${id} not found`)
+            const _location = user.location.coordinates
+            //const { location: { coordinates: shh } } = user
+
+            if (!_location) throw new Error(`user location with id ${id} not found`)
             
-
-
-/*             user.id = id
-            return user */
-            })()    
+            const response = await User.find({ location: { $nearSphere: { $geometry: { type: "Point", coordinates: [ 2.1894, 41.403 ] }, $maxDistance: distance } } })
+        return response    
+        })()    
 }

@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 
 const { Schema , ObjectId } = mongoose
-const Nears = require('./nears')
 
 module.exports = new Schema({
     name: {
@@ -33,7 +32,6 @@ module.exports = new Schema({
     reviews: {
         type: [{ type: ObjectId, ref: 'Review' }]
     },
-    nears: Nears,
     location: {
         type: {
           type: String, 

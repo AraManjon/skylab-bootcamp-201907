@@ -4,5 +4,6 @@ module.exports = {
     retrieveUser: require('./retrieve-user'),
     unregisterUser: require('./unregister-user'),
     updateUser: require('./update-user'),
-    updateGeo: require('./update-geo')
+    updateGeo: require('./update-geo'),
+    retrieveAllGeo: require('./retrieve-all-geo')
 }

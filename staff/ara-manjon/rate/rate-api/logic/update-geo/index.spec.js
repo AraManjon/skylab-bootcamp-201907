@@ -57,5 +57,6 @@ describe('logic - update geo', () => {
         }
     })
 
+
     after(() => database.disconnect())
 })

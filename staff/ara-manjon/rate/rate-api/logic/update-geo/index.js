@@ -4,8 +4,9 @@ const { validate }= require('rate-utils')
 /**
  * Updates a user geolocation.
  * 
- * @param {string} id
- * @param {Object} data
+ * @param {string} id User Id
+ * @param {string} longitude Longitude given by geolocation user
+ * @param {string} latitude Latitude given by geolocation user
  * 
  * @returns {Promise}
  */

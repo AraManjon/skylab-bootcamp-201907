@@ -5,5 +5,7 @@ module.exports = {
     unregisterUser: require('./unregister-user'),
     updateUser: require('./update-user'),
     updateGeo: require('./update-geo'),
-    retrieveAllGeo: require('./retrieve-all-geo')
+    retrieveAllGeo: require('./retrieve-all-geo'),
+    retrieveReviews: require('./retrieve-reviews'),
+    accessReview: require('./access-review')
 }

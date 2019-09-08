@@ -4,6 +4,5 @@ const { user, review, response, nears } = require('./schemas')
 module.exports = {
     User: mongoose.model('User', user),
     Review: mongoose.model('Review', review),
-    Response: mongoose.model('Response',response),
-    Nears: mongoose.model('Nears', nears)
+    Response: mongoose.model('Response',response)
 }

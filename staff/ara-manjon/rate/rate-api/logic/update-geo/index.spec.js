@@ -2,10 +2,10 @@ require('dotenv').config()
 const { expect } = require('chai')
 const updateGeo = require('.')
 const { database, models: { User } } = require('rate-data')
-const { env: { DB_URL_TEST }} = process
+const { env: { DB_URL }} = process
 
 describe('logic - update geo', () => {
-    before(() =>  database.connect(DB_URL_TEST))
+    before(() =>  database.connect(DB_URL))
 
     let name, surname, email, username, password, longitude, latitude, id
 

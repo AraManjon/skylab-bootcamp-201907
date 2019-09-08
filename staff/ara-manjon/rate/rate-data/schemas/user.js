@@ -35,13 +35,14 @@ module.exports = new Schema({
     location: {
         type: {
           type: String, 
-          enum: ['Point']
-         /*  required: true */
+          enum: ['Point'],
+          default: 'Point',
+          required: false
         },
         coordinates: {
           type: [Number],
-          default: []
-  /*         required: true */
+          default: [],
+          required: false 
         }
       }
 })

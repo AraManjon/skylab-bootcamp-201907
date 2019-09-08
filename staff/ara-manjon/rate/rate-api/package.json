@@ -16,13 +16,16 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "cloudinary": "^1.14.0",
     "cors": "^2.8.5",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.24.0",
     "mongoose": "^5.6.12",
     "rate-data": "file:../rate-data",
-    "rate-utils": "file:../rate-utils"
+    "rate-utils": "file:../rate-utils",
+    "streamifier": "^0.1.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",

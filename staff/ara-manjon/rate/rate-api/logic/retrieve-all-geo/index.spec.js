@@ -7,7 +7,7 @@ const { database, models: { User } } = require('rate-data')
 const { env: { DB_URL }} = process
 
 
-describe.only('logic - retrieve users by geolocation ', () => {
+describe('logic - retrieve users by geolocation ', () => {
     before(() =>  database.connect(DB_URL))
 
     let name, surname, username, email, password, id, longitude, latitude
@@ -30,7 +30,7 @@ describe.only('logic - retrieve users by geolocation ', () => {
     it('should succeed on correct data', async () => {
         
         const users = await retrieveAllGeo(id, distance)   
-        debugger      
+             
         expect(users[users.length -1]).to.exist
         })
 /*         it('should fail on email does not exist', async () => {

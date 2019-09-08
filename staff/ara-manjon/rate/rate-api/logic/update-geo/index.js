@@ -23,6 +23,6 @@ module.exports = function (id, longitude, latitude) {
     return (async () => {
         const user = await User.findById(id)
         if (!user) throw new Error(`user with id ${id} does not exist`)
-        await User.updateOne({_id:id},{$set:location})
+        
     })()
 }

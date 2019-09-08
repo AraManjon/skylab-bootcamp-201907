@@ -19,18 +19,20 @@ const moment = require('moment')
  * 
  * @throws {Error} user have already rate
  * 
- * @returns {Promise} on correct acces returns a promise
+ * @returns {Promise} on correct registed review returns a promise
  */
 
 module.exports = function (UserId, UserIdtoReview, comment, rate) {
-
+    
+    if(rate === undefined ) throw new Error('you should to rate to add a comment')
+    if(rate > 5 || rate < 1) throw new Error('you should to add a correct number')
+    
      validate.string(UserId, 'id')
      validate.string(UserIdtoReview, 'id')
-     validate.string(comment, 'comment')
      validate.number(rate, 'rate')
-
+    
      const date = new Date().toString()
-     /* validate.date(date, 'date') */
+     validate.string(date, 'date')
 
     return (async () => {
 

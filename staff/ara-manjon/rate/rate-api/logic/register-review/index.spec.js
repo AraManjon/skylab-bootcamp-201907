@@ -5,7 +5,7 @@ const { database, models: { User, Review } } = require('rate-data')
 const { env: { DB_URL }} = process
 
  
-describe.only('logic - register a review', () => {
+describe('logic - register a review', () => {
     before(() =>  database.connect(DB_URL))
 
     let name, surname, email, username, password, longitude, latitude, id
@@ -103,13 +103,116 @@ describe.only('logic - register a review', () => {
                            
         })
     })
-    it('should fail on non can add a comment without rate', async () =>{
+
+    it('should succeed on correct registered review', async () =>{
+        const response = await registerReview(id, id2, undefined, rate) 
+        
+            expect(response).not.to.exist
+            return ( async () => {
+                const user = await User.findOne({_id: id1})
+
+                let reviewsUser = user.reviews.map(review=>review._id.toString())
+
+                let results = await Promise.all(reviewsUser.map( async (reviewUser) =>{
+                    return await Review.find({_id: reviewUser}, {__v: 0}).lean()
+                }))
+
+                results.forEach((item, index)=>{
+                    if(item[index].author[0]._id.toString() === id){
+                        expect(item.comment).not.to.exist
+                        expect(item.rate).to.equal(rate)
+                        expect(item.author).to.equal(id._id.toString())
+                        expect(item.owner).to.equal(id1.id)
+                    }
+                }) 
+                           
+        })
+    })
+    it('should fail on rate is not a number', async () =>{
         try{
-            await registerReview(id, id1, comment, 11)  
+            await registerReview(id, id1, comment, 's')  
         }catch({message}){            
-            expect(message).to.equal('rate with value undefined is not a number')            
+            expect(message).to.equal('rate with value s is not a number')            
         }
     })
+    it('should fail on non can add a comment if not rate', async () =>{
+        try{
+            await registerReview(id, id1, comment, undefined)  
+        }catch({message}){            
+            expect(message).to.equal('you should to rate to add a comment')            
+        }
+    })
+    it('should fail on rate is not a number', async () =>{
+        try{
+            await registerReview(id, id1, comment, '')  
+        }catch({message}){            
+            expect(message).to.equal('you should to add a correct number')            
+        }
+    })
+    it('should fail on rate is not a correct number', async () =>{
+        try{
+            await registerReview(id, id1, comment, 7)  
+        }catch({message}){            
+            expect(message).to.equal('you should to add a correct number')            
+        }
+    })
+    it('should fail on rate is not a correct number', async () =>{
+        try{
+            await registerReview(id, id1, comment, -1)  
+        }catch({message}){            
+            expect(message).to.equal('you should to add a correct number')            
+        }
+    })
+    it('should fail on user id is not a string', async () =>{
+        try{
+            await registerReview(123, id1, comment, rate) 
+        }catch({message}){
+
+            expect(message).to.equal('id with value 123 is not a string')            
+        }
+    }) 
+    it('should fail on user id is not a string', async () =>{
+        try{
+            await registerReview(id, 123, comment, rate) 
+        }catch({message}){
+
+            expect(message).to.equal('id with value 123 is not a string')            
+        }
+    }) 
+    it('should fail on user id is not a string', async () =>{
+        const fakeid = '5e711645a4734dc78985edb0'
+        try{
+            await registerReview(id, fakeid, undefined, rate) 
+        }catch({message}){
+
+            expect(message).to.equal(`user with id ${fakeid} does not exist`)            
+        }
+    }) 
+    it('should fail on user id is not a string', async () =>{
+        const fakeid = '5e711645a4734dc78985edb0'
+        try{
+            await registerReview(fakeid, id, undefined, rate) 
+        }catch({message}){
+
+            expect(message).to.equal(`user with id ${fakeid} does not exist`)            
+        }
+    })
+    it('should fail on user id is empty or blank', async () =>{
+        try{
+            await registerReview('', id1, comment, rate) 
+        }catch({message}){
+
+            expect(message).to.equal('id is empty or blank')            
+        }
+    }) 
+    it('should fail on user id is empty or blank', async () =>{
+        try{
+            await registerReview(id, '', comment, rate) 
+        }catch({message}){
+
+            expect(message).to.equal('id is empty or blank')            
+        }
+    }) 
 
     after(() => database.disconnect())
 }) 

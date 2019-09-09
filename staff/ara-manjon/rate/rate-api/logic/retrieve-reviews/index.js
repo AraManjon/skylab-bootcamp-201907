@@ -10,16 +10,27 @@ const {
 /**
  * Retrieves reviews user by its id.
  * 
- * @param {string} id
+ * @param {string} id user Id
+ * 
+ * @throws {Error} user id is empty or blank
+ * 
+ * @throws {Error} user id is not a string
+ * 
+ * @throws {Error} user with id does not exist
  * 
  * @returns {Promise}
  * 
  * Returns a user
  */
+
+
 module.exports = function (id) {
     validate.string(id, 'id')
     
     return (async () => {
+
+        const user = await User.findById({ _id: id})
+        if (!user) throw new Error(`user with id ${id} does not exist`)
         
         let reviews = await Review.find({ author: id },{ __v:0, password:0}).lean()
         reviews.forEach(review=>{
@@ -40,8 +51,7 @@ module.exports = function (id) {
             reviewedUser.id = reviewedUser._id.toString()
             delete reviewedUser._id.toString()
         })
-        
-        
+               
         return { reviews, reviewedUsers }
     })()
 }

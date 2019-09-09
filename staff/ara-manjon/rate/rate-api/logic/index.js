@@ -7,5 +7,6 @@ module.exports = {
     updateGeo: require('./update-geo'),
     retrieveAllGeo: require('./retrieve-all-geo'),
     retrieveReviews: require('./retrieve-reviews'),
-    accessReview: require('./access-review')
+    accessReview: require('./access-review'),
+    registerReview: require('./register-review'),
 }

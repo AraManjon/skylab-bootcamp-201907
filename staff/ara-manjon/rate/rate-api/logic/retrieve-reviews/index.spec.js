@@ -97,16 +97,22 @@ describe('logic - retrieve review',()=>{
             
         })
         it('should fail on empty user id', async ()=>{
-            userId = ''
             try {
-                await retrieveReviews(userId)
+                await retrieveReviews('')
             } catch({message}) {
                 expect(message).to.equal('id is empty or blank')
             }
         })
 
+        it('should fail on user id does not exist', async ()=>{
+            const fakeid = '5e711645a4734dc78985edb0'
+            try {
+                await retrieveReviews(fakeid)
+            } catch({message}) {
+                expect(message).to.equal(`user with id ${fakeid} does not exist`)
+            }
+        })
         it('should fail on empty user id', async ()=>{
-            
             try {
                 await retrieveReviews(user2.id)
             } catch({message}) {

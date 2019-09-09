@@ -179,7 +179,7 @@ describe('logic - register a review', () => {
             expect(message).to.equal('id with value 123 is not a string')            
         }
     }) 
-    it('should fail on user id is not a string', async () =>{
+    it('should fail on user id not exist', async () =>{
         const fakeid = '5e711645a4734dc78985edb0'
         try{
             await registerReview(id, fakeid, undefined, rate) 
@@ -188,7 +188,7 @@ describe('logic - register a review', () => {
             expect(message).to.equal(`user with id ${fakeid} does not exist`)            
         }
     }) 
-    it('should fail on user id is not a string', async () =>{
+    it('should fail on user id not exist', async () =>{
         const fakeid = '5e711645a4734dc78985edb0'
         try{
             await registerReview(fakeid, id, undefined, rate) 

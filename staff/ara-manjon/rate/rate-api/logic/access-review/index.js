@@ -17,7 +17,7 @@ const moment = require('moment')
  * 
  * @throws {Error} user have already rate
  * 
- * @returns {Promise} on correct acces returns a promise
+ * @returns {Promise} ron correct acces returns a promise
  */
 
 

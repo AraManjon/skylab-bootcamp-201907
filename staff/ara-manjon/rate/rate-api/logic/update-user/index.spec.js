@@ -2,10 +2,10 @@ require('dotenv').config()
 const { expect } = require('chai')
 const updateUser = require('.')
 const { database, models: { User } } = require('rate-data')
-const { env: { DB_URL_TEST }} = process
+const { env: { DB_URL }} = process
 
-describe('logic - update user', () => {
-    before(() =>  database.connect(DB_URL_TEST))
+describe.only('logic - update user', () => {
+    before(() =>  database.connect(DB_URL))
 
     let name, surname, email, username, password, id, body
 
@@ -20,22 +20,19 @@ describe('logic - update user', () => {
             name: `name-${Math.random()}`,
             surname: `surname-${Math.random()}`,
             username: `username-${Math.random()}`,
-            email: `email-${Math.random()}@domain.com`,
             password: `password-${Math.random()}`,
             image: `image-${Math.random()}`
 
         }
 
         await User.deleteMany()
-            const user = await User.create({ name, surname, username, email, password})
+            const user = await User.create({ name, surname, username, email,password})
             id = user.id
     })
 
     it('should succeed on correct data', async () =>{
         const response = await updateUser(id, body)
-            expect(response).not.to.exist
-            return ( async () => {
-            
+            expect(response).not.to.exist           
             const user = await User.findById(id)
            
                 expect(user).to.exist
@@ -46,17 +43,16 @@ describe('logic - update user', () => {
                 expect(user.password).to.equal(body.password)
                 expect(user.longitud).to.equal(body.longitud)
                 expect(user.latitude).to.equal(body.latitude)
-        })
     })
 
-    it('should fail on non-existing user', async () => {
+ /*    it('should fail on non-existing user', async () => {
         const fakeid = '5e711645a4734dc78985edb0'
        try{
         await updateUser(fakeid, body)
        }catch({ message }){
            expect(message).to.equal(`user with id ${fakeid} does not exist`)
         }
-    })
+    }) */
 
     after(() => database.disconnect())
 })

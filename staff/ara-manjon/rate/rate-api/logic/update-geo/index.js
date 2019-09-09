@@ -6,9 +6,22 @@ const { validate }= require('rate-utils')
  * 
  * @param {string} id User Id
  * @param {string} longitude Longitude given by geolocation user
+ * 
  * @param {string} latitude Latitude given by geolocation user
  * 
- * @returns {Promise}
+ * 
+ * @throws {Error} user id is empty or blank
+ * 
+ * @throws {Error} user id is not a string
+ * 
+ * @throws {Error} user with id does not exist
+ * 
+ * @throws {Error} longitude is not a number
+ * 
+ * @throws {Error} latitude is not a number
+ * 
+ * 
+ * @returns {Promise} 
  */
 
 
@@ -23,6 +36,12 @@ module.exports = function (id, longitude, latitude) {
     return (async () => {
         const user = await User.findById(id)
         if (!user) throw new Error(`user with id ${id} does not exist`)
+
+        user.location = location
+        user.location.id = user.location._id
+        delete user.location._id
+
+        await user.save()
         
     })()
 }

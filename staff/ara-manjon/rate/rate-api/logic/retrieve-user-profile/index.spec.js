@@ -6,7 +6,7 @@ const { database, models: { User, Review } } = require('rate-data')
 const { env: { DB_URL_TEST }} = process
 
 
-describe.only('logic - retrieve user profile', () => {
+describe('logic - retrieve user profile', () => {
     before(() =>  database.connect(DB_URL_TEST))
 
     let name, surname, username, email, password, image, id, id1, username1, email1, review, longitude, latitude, review1, user, user1
@@ -66,19 +66,67 @@ describe.only('logic - retrieve user profile', () => {
         response.reviewsUserComplete.forEach(review=>{            
             expect(review[0].rate).to.exist
             expect(review[0].author.id).to.equal(user1._id.toString())
-
-            
+            expect(review[0].owner.id).to.equal(user._id.toString())
+            expect(review[0].date).to.exist           
         })
-
+        //user rate 
+        expect(response.averageRate).to.exist
+        //user authorComplete
+        expect(response.authorComplete).to.exist
+        response.authorComplete.forEach(author=>{
+        expect(author[0].id).to.equal(id1)
+        expect(author[0].password).not.to.exist
+        expect(author[0]._id).not.to.exist
+        expect(author[0].username).to.equal(username1)
+        expect(author[0].image).to.exist
+        expect(author[0].location).to.exist
+    })
         })
-        /* it('should fail on email does not exist', async () => {
+        //no reviews
+    it('should succeed on correct data without reviews', async () => {
+        const response = await retrieveUser(id1)           
+        expect(response).to.exist
+        //user
+        expect(response.user.id).to.equal(id1)
+        expect(response.user.password).not.to.exist
+        expect(response.user._id).not.to.exist
+        expect(response.user.username).to.equal(username1)
+        expect(response.user.image).to.exist
+        expect(response.user.location).to.exist
+        //user reviews
+        expect(response.reviewsUserComplete).to.exist
+        //user rate 
+        expect(response.averageRate).to.equal(0)
+        //user authorComplete
+        expect(response.authorComplete).to.equal
+        })
+         it('should fail on user id not exist', async () => {
+            const fakeid = '5e711645a4734dc78985edb0'
             try{
-                await retrieveUser('5d6f91ac50701384cf6a5d04')
-            }catch({message}){
-    
-                expect(message).to.equal(`user with id 5d6f91ac50701384cf6a5d04 not found`)
+                await retrieveUser(fakeid)  
+            }catch({message}){    
+                expect(message).to.equal(`user with id ${fakeid} does not exist`)
             }
         })
+         it('should fail on user id is empty or blank', async () => {
+            const fakeid = ''
+            try{
+                await retrieveUser(fakeid)  
+            }catch({message}){    
+                expect(message).to.equal('id is empty or blank')
+            }
+        })
+        
+         it('should fail on user id is not a string', async () => {
+            const fakeid = 123
+            try{
+                await retrieveUser(fakeid)  
+            }catch({message}){    
+                expect(message).to.equal('id with value 123 is not a string')
+            }
+        })
+
+        /*
         it('should fail on id is empty', async () => {
             try{
                 await retrieveUser('')

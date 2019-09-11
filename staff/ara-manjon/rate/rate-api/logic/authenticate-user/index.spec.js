@@ -2,6 +2,7 @@ require('dotenv').config()
 const { expect } = require('chai')
 const authenticateUser = require('.')
 const { database, models: { User } } = require('rate-data')
+const bcrypt = require('bcryptjs')
 
 
 const { env: { DB_URL_TEST }} = process
@@ -19,7 +20,7 @@ describe('logic - authenticate user', () => {
         password = `password-${Math.random()}`
 
         await User.deleteMany()
-        const user= await User.create({ name, surname, username, email, password })
+        const user= await User.create({ name, surname, username, email, password: await bcrypt.hash(password, 10) })
         id = user.id 
     })
 
@@ -53,13 +54,6 @@ describe('logic - authenticate user', () => {
             expect(message).to.equal(`wrong credentials`)
         }
     }) 
-   it('should fail on non valid password', async () =>{
-        try{
-            await authenticateUser(email, 'dajhfkasf')            
-        }catch({message}){
-        expect(message).to.equal('undefined is not a valid password. The string must contain at least 1 numeric character, 1 alphabetical character and must be six characters or longer')
-    }
- })
    it('should fail on empty password', async () =>{
         try{
             await authenticateUser(email, '')            

@@ -15,18 +15,24 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "busboy": "^0.3.1",
+    "cloudinary": "^1.14.0",
     "cors": "^2.8.5",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.24.0",
     "mongoose": "^5.6.12",
     "rate-data": "file:../rate-data",
-    "rate-utils": "file:../rate-utils"
+    "rate-utils": "file:../rate-utils",
+    "streamifier": "^0.1.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^6.2.0",
-    "nodemon": "^1.19.1"
+    "nodemon": "^1.19.1",
+    "nyc": "^14.1.1"
   }
 }

@@ -10,13 +10,14 @@ const { validate }= require('rate-utils')
  * 
  * @returns {Promise}
 */
-module.exports = function(id, email, password) {
+module.exports = function(id, password) {
     validate.string(id, 'id')
-    validate.string(email, 'email')
     validate.string(password, 'password')
     validate.password(password, 'password')
+
+    if(!password)throw Error('password required')
     return(async ()=>{
-        const result = await User.deleteOne({ _id: id, email, password })
+        const result = await User.deleteOne({ _id: id })
         if (!result.deletedCount) throw Error('wrong credentials')
     })()        
 }

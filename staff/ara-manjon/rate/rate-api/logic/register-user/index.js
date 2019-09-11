@@ -1,16 +1,17 @@
 const { models: { User } } = require('rate-data')
 const { validate }= require('rate-utils')
+const bcrypt = require('bcryptjs')
 
 /**
  * Registers a user.
  * 
- * @param {string} name 
- * @param {string} surname 
- * @param {string} username 
- * @param {string} email 
- * @param {string} password
+ * @param {string} name name introduced by user
+ * @param {string} surname surname introduced by user
+ * @param {string} username username introduced by user
+ * @param {string} email email introduced by user
+ * @param {string} password password introduced by user
  * 
- * @returns {Promise}
+ * @returns {Promise} Returns the user
  */
 
 
@@ -31,8 +32,9 @@ module.exports = function(name, surname, username, email, password) {
         const _user = await User.findOne({ username })
 
         if (_user)throw Error('Username is in use')
+        const hash = await bcrypt.hash(password,10)
             
-        await User.create({name, surname, username, email, password})
+        await User.create({name, surname, username, email, password: hash})
         return user
     })()
 }

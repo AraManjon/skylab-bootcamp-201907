@@ -1,11 +1,12 @@
 const logic = require('../logic')
 
 module.exports = async (req, res) => {
-    const { userId, body: {longitude, latitude} }= req
+    const { userId, params:{ userToReviewId }}= req
 
     try {
-        await logic.updateGeo(userId, longitude, latitude)
-        res.json({ message: 'User geolocation updated successfully'})
+        debugger
+        await logic.accessReview(userId, userToReviewId)
+        res.json({ message: 'review access allowed'})
         res.status(404).json({ error: message })
     } catch ({ message }) {
         res.status(404).json({ error: message })

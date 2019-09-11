@@ -41,7 +41,7 @@ describe('logic - register user', () => {
         expect(user.surname).to.equal(surname)
         expect(user.username).to.equal(username)
         expect(user.email).to.equal(email)
-        expect(user.password).to.equal(password)
+        expect(user.password).to.exist
     })
     it('should fail if the username is in use', async () =>{
         try{

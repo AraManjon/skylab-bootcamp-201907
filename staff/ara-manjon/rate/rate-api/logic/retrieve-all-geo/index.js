@@ -22,7 +22,10 @@ const { validate }= require('rate-utils')
        */
 module.exports = function (id, distance){
     validate.string(id,'id')
-    validate.number(distance, 'distance')  
+    validate.string(distance, 'distance')  
+
+    const _distance = Number(distance)
+    validate.number(_distance, 'distance') 
 
         return (async () => {            
             const user = await User.findOne({ _id: id}, { _id: 0, password: 0 } ).lean()
@@ -33,7 +36,7 @@ module.exports = function (id, distance){
 
             if (!_location) throw new Error(`user location with id ${id} not found`)
             
-            response = await User.find({ location: { $nearSphere: { $geometry: _location, $maxDistance: distance } } })
+            response = await User.find({ location: { $nearSphere: { $geometry: _location, $maxDistance: _distance } } })
         return response    
         })()    
 }

@@ -1,6 +1,6 @@
 require('dotenv').config()
 const { expect } = require('chai')
-const retrieveUser = require('.')
+const retrieveUserProfile = require('.')
 const { database, models: { User, Review } } = require('rate-data')
 
 const { env: { DB_URL_TEST }} = process
@@ -53,7 +53,7 @@ describe('logic - retrieve user profile', () => {
     })
 
     it('should succeed on correct data', async () => {
-        const response = await retrieveUser(id)           
+        const response = await retrieveUserProfile(id)           
         expect(response).to.exist
         //user
         expect(response.user.id).to.equal(id)
@@ -84,7 +84,7 @@ describe('logic - retrieve user profile', () => {
         })
         //no reviews
     it('should succeed on correct data without reviews', async () => {
-        const response = await retrieveUser(id1)           
+        const response = await retrieveUserProfile(id1)           
         expect(response).to.exist
         //user
         expect(response.user.id).to.equal(id1)
@@ -103,7 +103,7 @@ describe('logic - retrieve user profile', () => {
          it('should fail on user id not exist', async () => {
             const fakeid = '5e711645a4734dc78985edb0'
             try{
-                await retrieveUser(fakeid)  
+                await retrieveUserProfile(fakeid)  
             }catch({message}){    
                 expect(message).to.equal(`user with id ${fakeid} does not exist`)
             }
@@ -111,7 +111,7 @@ describe('logic - retrieve user profile', () => {
          it('should fail on user id is empty or blank', async () => {
             const fakeid = ''
             try{
-                await retrieveUser(fakeid)  
+                await retrieveUserProfile(fakeid)  
             }catch({message}){    
                 expect(message).to.equal('id is empty or blank')
             }
@@ -120,16 +120,15 @@ describe('logic - retrieve user profile', () => {
          it('should fail on user id is not a string', async () => {
             const fakeid = 123
             try{
-                await retrieveUser(fakeid)  
+                await retrieveUserProfile(fakeid)  
             }catch({message}){    
                 expect(message).to.equal('id with value 123 is not a string')
             }
         })
 
-        /*
         it('should fail on id is empty', async () => {
             try{
-                await retrieveUser('')
+                await retrieveUserProfile('')
             }catch({message}){
     
                 expect(message).to.equal(`id is empty or blank`)
@@ -137,12 +136,12 @@ describe('logic - retrieve user profile', () => {
         })
         it('should fail on id is not a string', async () => {
             try{
-                await retrieveUser(123)
+                await retrieveUserProfile(123)
             }catch({message}){
     
                 expect(message).to.equal(`id with value 123 is not a string`)
             }
-        }) */
+        })
 
     after(() => database.disconnect())
 })

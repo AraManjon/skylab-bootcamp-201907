@@ -1,69 +1,38 @@
 const { models: { User } } = require('rate-data')
 const {validate} = require('rate-utils')
-
-/* const streamifier = require('streamifier')
-const cloudinary = require('cloudinary')
-​
-const { CLOUDINARY_API_KEY, CLOUDINARY_NAME, CLOUDINARY_SECRET_KEY } = require('./config')
-​ */ 
+const bcrypt = require('bcryptjs')
 
 /**
- * Updates a user.
+ * Update a user.
  * 
- * @param {string} id
- * @param {Object} data
+ * @param {string} id user id
+ * @param {Object} data data parametres introduced by user
  * 
- * @returns {Promise}
+ * @returns {Promise}  Returns a promise
  */
 
-
-
-
- 
  module.exports = function (id, data) {
-     validate.string(id, 'id')
-     /* validate.object(image, 'image') */
-/*       validate.object(data, 'data')
-     if (data.name) validate.string(data.name, 'name')
-     if (data.surname) validate.string(data.surname, 'surname')
-     if (data.username) validate.string(data.username, 'userrname')
-     if (data.password) validate.string(data.password, 'password')
-     if (data.password) validate.password(data.password, 'password') */
+    validate.string(id, 'id')
+    validate.object(data, 'data')
+    if (data.name) validate.string(data.name, 'name')
+    if (data.surname) validate.string(data.surname, 'surname')
+    if (data.username) validate.string(data.username, 'username')
+    if (data.password) validate.string(data.password, 'password')
+    if (data.password) validate.password(data.password, 'password')
+
+    if(data.email) throw new Error('email non-modifiable')
  
     return (async () => {
-        const user = await User.findById(id)
-        if (!user) throw new Error(`user with id ${id} does not exist`)
-        /* const user = await User.findByIdAndUpdate({_id: id},{$set: data}) */
- ​        /* _user.id = _user._id.toString() */
-        return user  
+        if(data.password){
+            const hash = await bcrypt.hash(data.password,10)
+            data.password = hash
+        }
+         
+        const user = await User.findByIdAndUpdate(id, { $set: data })
+        if (!user) throw Error(`User with id ${id} does not exist.`)         
     })()
 } 
 
-
-
-/*          cloudinary.config({
-            cloud_name: CLOUDINARY_NAME,
-            api_key: CLOUDINARY_API_KEY,
-            api_secret: CLOUDINARY_SECRET_KEY
-            })
-
-            const _image = await new Promise((resolve, reject) => {
-                ​
-                            const upload_stream = cloudinary.uploader.upload_stream((err,_image) => {
-                ​
-                                if (err) return reject (`Image could not be uploaded: ${err}`)
-                ​
-                                resolve(_image)
-                            })
-                            streamifier.createReadStream(image).pipe(upload_stream)
-                        })
-
-        await User.updateOne({_id:id},{$set:data})
-
-        let _user = await User.findByIdAndUpdate(userId, { image: image.secure_url }, { new: true, runValidators: true }).select('-__v -password').lean()
-        
-        _user.id = user._id.toString()
-        delete _user._id  */
 
 
 

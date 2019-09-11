@@ -2,11 +2,11 @@ require('dotenv').config()
 const { expect } = require('chai')
 const accessReview = require('.')
 const { database, models: { User, Review } } = require('rate-data')
-const { env: { DB_URL }} = process
+const { env: { DB_URL_TEST }} = process
 
 
 describe('logic - access a review', () => {
-    before(() =>  database.connect(DB_URL))
+    before(() =>  database.connect(DB_URL_TEST))
 
     let name, surname, email, username, password, longitude, latitude, id
     let name1, surname1, username1,  email1, password1, longitude1, latitude1, id1

@@ -19,7 +19,7 @@ describe('logic - unregister user', () => {
             id = user.id
     })
     it('should succeed on correct data', async () => {
-        const result = await unregisterUser(id, email, password)
+        const result = await unregisterUser(id, password)
             
             expect(result).not.to.exist
             const user = await User.findById(id)
@@ -28,7 +28,7 @@ describe('logic - unregister user', () => {
     })
     it('should fail on unexisting user', async () => {
         try{
-            await unregisterUser('5d5d5530531d455f75da9fF9', email, password)
+            await unregisterUser('5d5d5530531d455f75da9fF9',password)
         } catch({ message }) {
             expect(message).to.equal('wrong credentials')
         }
@@ -36,7 +36,7 @@ describe('logic - unregister user', () => {
     )
     it('should fail on existing user, but wrong password', async () => {
         try{
-            await unregisterUser(id, email, 'wrongpassword1')
+            await unregisterUser(id, 'wrongpassword1')
         } catch({ message }) {
             expect(message).to.equal('wrong credentials')
         }

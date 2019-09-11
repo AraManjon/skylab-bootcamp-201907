@@ -23,22 +23,25 @@ const moment = require('moment')
  */
 
 module.exports = function (UserId, UserIdtoReview, comment, rate) {
-    
     if(rate === undefined ) throw new Error('you should to rate to add a comment')
     if(rate > 5 || rate < 1) throw new Error('you should to add a correct number')
+
+    const date = new Date().toString()
     
+    validate.string(date, 'date')
      validate.string(UserId, 'id')
      validate.string(UserIdtoReview, 'id')
      validate.number(rate, 'rate')
-    
-     const date = new Date().toString()
-     validate.string(date, 'date')
+     
+     
+     
+     return (async () => {
 
-    return (async () => {
 
-        const user = await User.findOne({ _id: UserIdtoReview})
+        const user = await User.findOne({ _id: UserIdtoReview })
+
         if (!user) throw new Error(`user with id ${UserIdtoReview} does not exist`)
-        await Review.create({comment, rate, date, author: UserId, owner: UserIdtoReview})
+        const review = await Review.create({comment, rate, date, author: UserId, owner: UserIdtoReview})
         
         user.reviews.push(review.id)
         await user.save()

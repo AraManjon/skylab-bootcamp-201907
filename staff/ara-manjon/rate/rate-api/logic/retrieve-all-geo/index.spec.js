@@ -6,17 +6,17 @@ const retrieveAllGeo = require('.')
 const { database, models: { User} } = require('rate-data')
 
 
-const { env: { DB_URL }} = process
+const { env: { DB_URL_TEST }} = process
 
 
 describe('logic - retrieve users by geolocation ', () => {
-    before(() =>  database.connect(DB_URL))
+    before(() =>  database.connect(DB_URL_TEST))
 
     let name, surname, username, email, password, id, longitude, latitude,
         name1, surname1, username1, email1, password1, id1, longitude1, latitude1, 
         name2, surname2,  username2, email2, password2, id2, longitude2, latitude2,
         name3, surname3,  username3, email3, password3, id3
-    const distance= 1200
+    const distance= "1200"
 
     beforeEach(async () => {
         //torre agbar
@@ -114,7 +114,7 @@ describe('logic - retrieve users by geolocation ', () => {
                 await retrieveAllGeo(id, '')
             }catch({message}){
     
-                expect(message).to.equal('distance with value  is not a number')
+                expect(message).to.equal('distance is empty or blank')
             }
         })
         it('should fail on distance is not a number', async () => {

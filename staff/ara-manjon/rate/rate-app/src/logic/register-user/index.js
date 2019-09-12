@@ -10,7 +10,6 @@ export default function (name, surname, username, email, password) {
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify({ name, surname, username, email, password })
         })
-        debugger
         if (response.status !== 201) {
             const { error } = await response.json()
 

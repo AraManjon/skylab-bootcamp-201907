@@ -1,5 +1,5 @@
 import logic from '..'
-import { database, models } from 'my-stuff-data'
+import { database, models } from 'rate-data'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 

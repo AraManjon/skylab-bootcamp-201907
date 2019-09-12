@@ -3,6 +3,7 @@ import authenticateUser from './authenticate-user'
 import isUserLoggedIn from './is-user-logged-in'
 import logUserOut from './log-user-out'
 import retrieveUser from './retrieve-user'
+import retrieveUserProfile from './retrieve-user-profile'
 
 export default {
      set __token__(token) {
@@ -18,6 +19,7 @@ export default {
     isUserLoggedIn,
     logUserOut,
     retrieveUser,
+    retrieveUserProfile,
 
      async searchDucks(query) {
         const response = await fetch(`https://duckling-api.herokuapp.com/api/search?q=${query}`)

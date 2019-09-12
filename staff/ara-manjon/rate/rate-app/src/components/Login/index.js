@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function ({ onBack, onLogin }) {
+export default function ({ goRegister, onLogin }) {
     return <>
         <h2>Login</h2>
         <form onSubmit={event => {
@@ -17,7 +17,7 @@ export default function ({ onBack, onLogin }) {
         <a href="#" onClick={event => {
             event.preventDefault()
 
-            onBack()
-        }}>Go back</a>
+            goRegister()
+        }}>Go register</a>
     </>
 }

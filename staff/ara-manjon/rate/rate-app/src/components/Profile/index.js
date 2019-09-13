@@ -2,41 +2,33 @@ import React, { useState, useEffect } from 'react'
 import './index.sass'
 import logic from '../../logic'
 import { withRouter } from 'react-router-dom'
+import Review from '../Review'
 
 export default withRouter(function ({ history}) {
     const [user, setUser] = useState()
-    const [averageRate, setAverageRate] = useState()
-    const [authorComplete, setAuthorComplete] = useState()
-    const [reviewsUserComplete, setReviewsUserComplete] = useState()
+
 
     useEffect(() => {
         (async () => {
-            const {user, averageRate, authorComplete, reviewsUserComplete } = await logic.retrieveUserProfile()
-
-            setUser(user)
-            setAverageRate(averageRate)
-            setAuthorComplete(authorComplete)
-            setReviewsUserComplete(reviewsUserComplete)
+            const {user} = await logic.retrieveUserProfile()
             debugger
+            setUser(user) 
+    
         })()
     }, [])
     debugger
     return <main className="profile">
         <ul className="profile__user--big">
             <li className="username">{user && user.username}</li>
-            <li className="rate">{averageRate && averageRate}</li>
+            {<li className="rate">{user && user.averageRate }</li>}
         </ul>         
-        {/* <ul className= "authors"> {authorComplete && authorComplete.map(author => <li className="authorList" key='0'>{author.username}</li>)}</ul> */}
         <section className= "profile__reviews">
-            <ul className= "reviews"> {authorComplete && reviewsUserComplete && authorComplete.map(author => 
-                <li className="reviews__username" key='0'>{author.username}</li>
-                <li className="reviews__rate" key='1'>{author.rate}</li>)}
+            <ul className= "reviews"> {user && user.reviews.map(review => <>
+                {/* <li className="reviews__username" key='0'>{author.username}</li>
+                <li className="reviews__rate" key='1'>{author.rate}</li> */}
+                <li><Review author={review} /></li>
+                </>)}
             </ul>        
         </section>
-        <ul className= "reviews"> {reviewsUserComplete && reviewsUserComplete.map(review => <li className="authorList" key='40'>{review.author}</li>)}</ul>
-         
-
-
-        {/*  <ul><li>{user.surname}</li></ul>  */}
     </main>
 })

@@ -51,17 +51,15 @@ module.exports = function (id) {
         const reviews = user.reviews
         const reviewsWithAuthor = await Promise.all(reviews.map(async (review) => {
 
-
             let reviewAndAuthor = await Review.findById({
                 _id: review.id
             }).populate('author').lean()
 
             reviewAndAuthor.id = reviewAndAuthor._id.toString()
             delete reviewAndAuthor._id
-            delete reviewAndAuthor.author[0].password
 
-            reviewAndAuthor.author[0].id = reviewAndAuthor.author[0]._id.toString()
-            delete reviewAndAuthor.author[0]._id
+            reviewAndAuthor.author.id = reviewAndAuthor.author._id.toString()
+            delete reviewAndAuthor.author._id
             //
 
             reviewAndAuthor.author = reviewAndAuthor.author[0]
@@ -73,7 +71,6 @@ module.exports = function (id) {
         user.averageRate = averageRate
         //replace reviews with id's with reviews with author object 
         user.reviews = reviewsWithAuthor
-
-        return user
+        return user 
     })()
 }

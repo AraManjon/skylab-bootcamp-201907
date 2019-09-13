@@ -46,7 +46,8 @@ describe('logic - retrieve user profile', () => {
             review.id = review._id.toString()
 
             review1 = await Review.create({comment, rate: rate[1], date, author: user1._id.toString(), owner: user.id})
-            review.id = review._id.toString()            
+            review.id = review._id.toString()
+        debugger             
             user.reviews.push(review.id)
             user.reviews.push(review1.id)
             await user.save()
@@ -64,22 +65,22 @@ describe('logic - retrieve user profile', () => {
         expect(response.user.location).to.exist
         //user reviews
         response.reviewsUserComplete.forEach(review=>{            
-            expect(review[0].rate).to.exist
-            expect(review[0].author.id).to.equal(user1._id.toString())
-            expect(review[0].owner.id).to.equal(user._id.toString())
-            expect(review[0].date).to.exist           
+            expect(review.rate).to.exist
+            expect(review.author.id).to.equal(user1._id.toString())
+            expect(review.owner.id).to.equal(user._id.toString())
+            expect(review.date).to.exist           
         })
         //user rate 
         expect(response.averageRate).to.exist
         //user authorComplete
         expect(response.authorComplete).to.exist
         response.authorComplete.forEach(author=>{
-        expect(author[0].id).to.equal(id1)
-        expect(author[0].password).not.to.exist
-        expect(author[0]._id).not.to.exist
-        expect(author[0].username).to.equal(username1)
-        expect(author[0].image).to.exist
-        expect(author[0].location).to.exist
+        expect(author.id).to.equal(id1)
+        expect(author.password).not.to.exist
+        expect(author._id).not.to.exist
+        expect(author.username).to.equal(username1)
+        expect(author.image).to.exist
+        expect(author.location).to.exist
     })
         })
         //no reviews

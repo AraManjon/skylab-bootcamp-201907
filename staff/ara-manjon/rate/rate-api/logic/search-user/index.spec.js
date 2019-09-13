@@ -32,7 +32,6 @@ describe('logic - search user by params introduced', () => {
         //review 1
         comment=`comment-${Math.random()}`
         date= new Date().toString()
-        debugger
 
         await User.deleteMany()
         const location = {type: 'Point', coordinates: [longitude, latitude]}
@@ -50,7 +49,6 @@ describe('logic - search user by params introduced', () => {
             user.reviews.push(review.id)
             user.reviews.push(review1.id)
             await user.save()
-            debugger
     })
 
     it('should succeed on correct data', async () => {
@@ -104,13 +102,6 @@ it('should succeed on correct data', async () => {
         expect(user.image).to.exist
         expect(user.location).to.exist
     })
-})
-it('should fail user email is not found', async () => {
-    const fakeEmail= 'email@fakeimail.com'
-    const response = await searchUser({fakeEmail})           
-
-    expect(response).to.be.an('array').that.is.empty
-
 })
 it('should fail user email is not found', async () => {
     const fakeParam = ''

@@ -23,11 +23,11 @@ module.exports = new Schema({
         type: Date,
         required: true
     },
-    author: [{
+    author: {
         type: ObjectId,
         ref: 'User',
         required: true
-    }],
+    },
     owner: {
         type: ObjectId,
         ref: 'User',

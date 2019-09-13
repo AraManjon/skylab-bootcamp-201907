@@ -22,32 +22,37 @@ module.exports = function (id){
             const user= await User.findOne({ _id: id}, { __v: 0, password: 0 } ).lean()
             if (!user) throw new Error(`user with id ${id} does not exist`)
             user.id = id
+
             delete user._id            
+
             let reviewsUserId = user.reviews.map(review=>review._id.toString())
             
             let reviewsUserComplete = await Promise.all(reviewsUserId.map( async (reviewUserId) =>{
-                let review = await Review.find({_id: reviewUserId}, {__v: 0}).lean()
-                review[0].owner.id = review[0].owner._id.toString()
-                delete review[0].owner._id
+                let [review] = await Review.find({_id: reviewUserId}, {__v: 0}).lean()
+                review.owner.id = review.owner._id.toString()
+                delete review.owner._id
                 
-                review[0].id = review[0]._id.toString()
-                delete review[0]._id
+                review.id = review._id.toString()
+                delete review._id
                 return review
             }))
 
-            let reviewsRate = reviewsUserComplete.map(review => review[0].rate)
+            let reviewsRate = reviewsUserComplete.map(review => review.rate)
             
-            let reviewsAuthorId = reviewsUserComplete.map(review =>{                
-                review[0].author.id = review[0].author[0]._id.toString()
-                delete review[0].author[0]._id.toString()              
-                 return review[0].author.id
+
+            let reviewsAuthorId= reviewsUserComplete.map(review =>{
+                 review.author.id = review.author._id.toString()
+                 delete review.author._id.toString()
+                 return review.author
                 })
-          
-            let authorComplete = await Promise.all(reviewsAuthorId.map(async (authorId) =>{              
-                let author = await User.findById(authorId, {__v: 0, password: 0}).lean()                
-                author.id = author._id.toString()              
-                delete author._id
-                return author
+                
+            let authorComplete = await Promise.all(reviewsAuthorId.map(async (authorId) =>{
+                let author = await User.find({_id: authorId.id}, {__v: 0, password: 0}).lean()
+                author[0].id = author[0]._id.toString()
+               
+                delete author[0]._id
+                return author[0]
+
             }))
             let averageRate
             if(reviewsRate.length > 1) averageRate= reviewsRate.reduce((previous, current) => current += previous ) / reviewsRate.length

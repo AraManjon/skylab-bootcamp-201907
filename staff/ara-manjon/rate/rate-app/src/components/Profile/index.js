@@ -20,15 +20,22 @@ export default withRouter(function ({ history}) {
             debugger
         })()
     }, [])
-
+    debugger
     return <main className="profile">
-        <ul>
-            <li>{user && user.username}</li>
-            <li>{averageRate && averageRate}</li>
-        </ul>
+        <ul className="profile__user--big">
+            <li className="username">{user && user.username}</li>
+            <li className="rate">{averageRate && averageRate}</li>
+        </ul>         
+        {/* <ul className= "authors"> {authorComplete && authorComplete.map(author => <li className="authorList" key='0'>{author.username}</li>)}</ul> */}
+        <section className= "profile__reviews">
+            <ul className= "reviews"> {authorComplete && reviewsUserComplete && authorComplete.map(author => 
+                <li className="reviews__username" key='0'>{author.username}</li>
+                <li className="reviews__rate" key='1'>{author.rate}</li>)}
+            </ul>        
+        </section>
+        <ul className= "reviews"> {reviewsUserComplete && reviewsUserComplete.map(review => <li className="authorList" key='40'>{review.author}</li>)}</ul>
          
-        <ul className= "authors"> {reviewsUserComplete && reviewsUserComplete.map(review => <li className="authorList" key={ review.author }></li>)}</ul>
-         
+
 
         {/*  <ul><li>{user.surname}</li></ul>  */}
     </main>

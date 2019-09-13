@@ -52,6 +52,9 @@ const handleGoToRegister= ()=> {
       console.log('fail register', message)
     }
   }
+  const handleUserAuthor = ()=>{
+    
+  }
 
   const handleGoToUsersNears= ()=> {
     history.push('/users-to-rate')
@@ -110,6 +113,6 @@ const handleGoToRegister= ()=> {
     <Route exact path="/" render={() => <Hello toChange={handleChange} onChecked={checked} />} />
     <Route exact path="/register" render={() => <Register goLogin={handleGoToLogin}  onRegister ={handleRegister} />} />
     <Route exact path="/login" render={() => <Login goRegister={handleGoToRegister}  onLogin ={handleLogin} />} />
-    {logic.isUserLoggedIn() && <Route path="/profile" render={() => <Profile /* onLogout={handleLogout} *//>} />}
+    {logic.isUserLoggedIn() && <Route path="/profile" render={() => <Profile goToUserAuthor={handleUserAuthor}/* onLogout={handleLogout} *//>} />}
   </div>
 })

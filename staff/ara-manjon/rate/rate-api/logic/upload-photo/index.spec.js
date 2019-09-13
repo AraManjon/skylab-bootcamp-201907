@@ -6,7 +6,6 @@ const fs = require('fs')
 
 const { env: { DB_URL_TEST } } = process
 describe('logic - upload image', () => {
-     debugger
     before(() => database.connect(DB_URL_TEST))
 
     let name, surname, username, email, password, image, id

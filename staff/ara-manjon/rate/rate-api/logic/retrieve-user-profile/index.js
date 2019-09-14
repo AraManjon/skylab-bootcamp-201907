@@ -46,7 +46,7 @@ module.exports = function (id) {
         if (rate.length > 1) {
             averageRate = rate.reduce((previous, current) => current += previous) / rate.length
         }
-
+        averageRate = averageRate.toFixed(2)
         //retrieve reviews with autor
         const reviews = user.reviews
         const reviewsWithAuthor = await Promise.all(reviews.map(async (review) => {
@@ -58,19 +58,29 @@ module.exports = function (id) {
             reviewAndAuthor.id = reviewAndAuthor._id.toString()
             delete reviewAndAuthor._id
 
+            delete reviewAndAuthor.__v
+            delete reviewAndAuthor.author.password
+
             reviewAndAuthor.author.id = reviewAndAuthor.author._id.toString()
             delete reviewAndAuthor.author._id
+            delete reviewAndAuthor.author.__v
             //
 
-            reviewAndAuthor.author = reviewAndAuthor.author[0]
+            reviewAndAuthor.author = reviewAndAuthor.author
 
-            //
+            //    
             return reviewAndAuthor
         }))
         //user average rate into user object
+    
         user.averageRate = averageRate
-        //replace reviews with id's with reviews with author object 
+
+
+        //replace reviews with id's with reviews with author object sorted by date
+        reviewsWithAuthor.sort(function(a,b){
+            if( a.date < b.date) return 1
+        })
         user.reviews = reviewsWithAuthor
-        return user 
+        return user
     })()
 }

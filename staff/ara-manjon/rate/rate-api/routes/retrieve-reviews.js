@@ -1,10 +1,10 @@
 const logic = require('../logic')
 
 module.exports = async (req, res) => {
-    const { userId } = req
+    const { userId, params: {id} } = req
 
     try {
-        const user =  await logic.retrieveReviews(userId)
+        const user =  await logic.retrieveReviews(id)
         res.json({ message: 'User retrieved correctly', user })
         
     } catch ({ message }) {

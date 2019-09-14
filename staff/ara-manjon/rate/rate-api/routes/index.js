@@ -21,11 +21,11 @@ const jsonBodyParser = bodyParser.json()
 //USER
 router.post('/users', jsonBodyParser, registerUser)
 router.post('/auth', jsonBodyParser, authenticateUser)
-router.get('/users', [tokenMiddleware, jsonBodyParser], retrieveUser)
+router.get('/users/', [tokenMiddleware, jsonBodyParser], retrieveUser)
 router.patch('/users', [tokenMiddleware, jsonBodyParser], updateUser)
 router.delete('/users', [tokenMiddleware, jsonBodyParser], unregisterUser)
 router.post('/users/image', tokenMiddleware, uploadPhoto)
-router.get('/users/username', [tokenMiddleware, jsonBodyParser], retrieveUserProfile)
+router.get('/users/:id', [tokenMiddleware, jsonBodyParser], retrieveUserProfile)
 
 //USER GEO
 router.patch('/geolocation', [tokenMiddleware, jsonBodyParser], updateGeo)

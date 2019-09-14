@@ -26,7 +26,7 @@ export default withRouter(function ({ history }) {
       await logic.authenticateUser(email, password)
 
       setView('profile')
-      history.push('/profile')
+      history.push(`/profile/${logic.getUserId()}`)
     } catch ({ message }) {
       console.log('fail login', message)
     }
@@ -52,13 +52,39 @@ const handleGoToRegister= ()=> {
       console.log('fail register', message)
     }
   }
-  const handleUserAuthor = ()=>{
-    
+
+
+  const handleGoToUsersToRate= async () => {
+    try {
+      await logic.updateLocation()
+    } catch ({ message }) {
+      console.log('fail update users location', message)
+    }
+  }
+/*   const callback = dogs => {
+    setDogs(dogs)
+    history.push('/searchResults')
   }
 
-  const handleGoToUsersNears= ()=> {
-    history.push('/users-to-rate')
-  } 
+  async function handleSearch(distance, breed, gender, size, age, neutered, withDogs, withCats, withChildren) {
+    try {
+      await logic.search(distance, breed, gender, size, age, neutered, withDogs, withCats, withChildren, callback)
+    } catch ({ message }) {
+      console.log('something went wrong with search', message)
+    }
+  } */
+
+
+/*    const handleUsersToRate = async () => {
+    try {
+      await logic.retrieveUsersToRate(resultsGeolocation)
+
+      history.push(`/raters`)
+    } catch ({ message }) {
+      console.log('fail retrieved users geolocation', message)
+    }
+  } */
+
   const handleGoToSearch= ()=> {
     history.push('/search')
   } 
@@ -79,7 +105,7 @@ const handleGoToRegister= ()=> {
 
     <header>
       {view == "profile" && <nav>        
-        <div><a href="" onClick={handleGoToUsersNears}>LOGO</a></div>
+        <div><a href="" onClick={handleGoToUsersToRate}>LOGO</a></div>
         <div>
             <input type="checkbox"/>
                 <span></span>
@@ -94,25 +120,16 @@ const handleGoToRegister= ()=> {
       </nav>}
     </header>
 
-
-    {/*     <div className="menuToggle">
-                        <input type="checkbox" />
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <ul className="menu">
-                            <li><a href="" onClick={handleGoToFavorites}>Favorites</a></li>
-                            <li><a href="" onClick={handleGoToMenuCollections} >Collections</a></li>
-                            <li><a href="" onClick={handleLogOut}>Log Out</a></li>
-                        </ul>
-                    </div> */}
-    
-
-    {/* <Route path="/" render={()=> <Hello startApp={handleGoToRegister}/>}/> */}
-
+    <main>
     <Route exact path="/" render={() => <Hello toChange={handleChange} onChecked={checked} />} />
     <Route exact path="/register" render={() => <Register goLogin={handleGoToLogin}  onRegister ={handleRegister} />} />
     <Route exact path="/login" render={() => <Login goRegister={handleGoToRegister}  onLogin ={handleLogin} />} />
-    {logic.isUserLoggedIn() && <Route path="/profile" render={() => <Profile goToUserAuthor={handleUserAuthor}/* onLogout={handleLogout} *//>} />}
-  </div>
+    <Route path="/profile/:id" render={props => logic.isUserLoggedIn() &&  <Profile id={props.match.params.id} /* onUserAuthor={handleUserAuthor} */ /* goUserAuthor={handleToUserAuthor} author={authorId} *//>} />
+    {/* <Route path="/raters" render={() => logic.isUserLoggedIn() &&  <Raters onUsersToRate={handleUsersToRate}  />} /> */}
+    </main>
+
+    <footer>
+
+    </footer>
+    </div>
 })

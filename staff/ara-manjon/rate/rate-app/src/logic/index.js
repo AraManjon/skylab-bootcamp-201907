@@ -4,6 +4,8 @@ import isUserLoggedIn from './is-user-logged-in'
 import logUserOut from './log-user-out'
 import retrieveUser from './retrieve-user'
 import retrieveUserProfile from './retrieve-user-profile'
+import getUserId from './get-user-id'
+import updateLocation from './retrieve-users-geo'
 
 export default {
      set __token__(token) {
@@ -20,6 +22,8 @@ export default {
     logUserOut,
     retrieveUser,
     retrieveUserProfile,
+    getUserId,
+    updateLocation,
 
      async searchDucks(query) {
         const response = await fetch(`https://duckling-api.herokuapp.com/api/search?q=${query}`)

@@ -2,11 +2,11 @@
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
-export default function () {
+export default function (id) {
     // validate fields
 
     return (async () => {
-        const response = await fetch(`${REACT_APP_API_URL}/users`, {
+        const response = await fetch(`${REACT_APP_API_URL}/users/${id}`, {
             method: 'get',
             headers: {
                 authorization: `bearer ${this.__token__}`

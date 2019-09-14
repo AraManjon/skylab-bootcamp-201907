@@ -1,25 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import logic from '../../logic'
 import { withRouter } from 'react-router-dom'
+import Rate from '../Rate'
 
-export default function ({ review }) {
-    // return <>
-    //     <h2>Login</h2>
-    //     <form onSubmit={event => {
-    //         event.preventDefault()
+export default function ({ onReview }) {
+     return <>
+        {/* User Author Info */}
+        {/* <a href="#" onClick={event =>{
+                event.preventDefault()
 
-    //         const { target: { email: { value: email }, password: { value: password } } } = event
-
-    //         onLogin(email, password)
-    //     }}>
-    //         <input type="email" name="email" />
-    //         <input type="password" name="password" />
-    //         <button>Proceed</button>
-    //     </form>
-    //     <a href="#" onClick={event => {
-    //         event.preventDefault()
-
-    //         goRegister()
-    //     }}>Go register</a>
-    // </>
+                history.push(`/profile/${onReview.author.id}`)
+        }}><img src={}>{onReview.author.image}</img></a>
+        <div className="rate">{ onReview.author.averageRate}</div>
+        <p className="username">{onReview.author.username}</p> */}
+        {/* Review Info */}
+        <p>{onReview.comment}</p>
+        <time dateTime={onReview.date}>{onReview.date}</time>
+        <Rate value={onReview.rate} />
+    </> 
 }

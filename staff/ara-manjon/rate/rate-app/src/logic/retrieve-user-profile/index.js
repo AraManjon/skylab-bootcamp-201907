@@ -12,7 +12,7 @@ export default function () {
                 authorization: `bearer ${this.__token__}`
             }
         })
-        debugger
+        
         if (response.status !== 200) {
             const { error } = await response.json()
 

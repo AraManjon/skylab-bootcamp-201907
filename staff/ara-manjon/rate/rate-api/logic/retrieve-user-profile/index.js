@@ -43,9 +43,10 @@ module.exports = function (id) {
         
         //retrieve average rate (number)
         let averageRate = 0
-        if (rate.length > 1) {
+        if (rate.length > 0) {
             averageRate = rate.reduce((previous, current) => current += previous) / rate.length
         }
+     
         averageRate = averageRate.toFixed(2)
         //retrieve reviews with autor
         const reviews = user.reviews

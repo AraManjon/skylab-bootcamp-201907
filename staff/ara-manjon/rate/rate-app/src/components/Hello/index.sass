@@ -1,0 +1,51 @@
+@import ../../style/base-setting
+
+.landing
+    height: 100vh
+    display: flex
+    flex-direction: column      
+    &__title
+        @extend %text-title       
+        
+.container-foot
+    text-align: center
+    width: 100vw
+    height: 40px
+    position: fixed
+    bottom: 50px
+
+.switch
+    height: 34px
+    width: 100vh
+
+#checkbox
+    display: none  
+
+.slider
+    cursor: pointer
+    width: 100vw
+    transition: .4s
+    color: $color-white
+    font-family: $font
+    font-size: 2rem
+    font-weight: 100
+    position: absolute
+    right: 50vw
+    
+    &:before
+        color: $color-white
+        bottom: 4px
+        content: "Start to rate"
+        height: 80%
+        transition: .6s
+        position: absolute
+        background-color: black
+        width: 100vw
+
+input:checked + .slider
+    &:before
+        text-align: center
+        transform: translateX(-100vw)
+
+
+        

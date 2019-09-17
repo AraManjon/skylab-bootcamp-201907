@@ -16,8 +16,8 @@ export default function (email, password) {
         })
 
         if (response.status === 200) {
-            const { token } = await response.json()
-
+            const { token, id } = await response.json()
+            sessionStorage.id = id
             //return token
             this.__token__ = token
 

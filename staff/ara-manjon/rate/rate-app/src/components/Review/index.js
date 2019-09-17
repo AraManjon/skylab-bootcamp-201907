@@ -1,21 +1,17 @@
-import React, { useState, useEffect } from 'react'
-import logic from '../../logic'
-import { withRouter } from 'react-router-dom'
+import React, { useContext } from 'react'
 import Rate from '../Rate'
+import User from '../User'
+import Context from '../Context'
+
 
 export default function ({ onReview }) {
+    const {view} = useContext(Context)
      return <>
-        {/* User Author Info */}
-        {/* <a href="#" onClick={event =>{
-                event.preventDefault()
-
-                history.push(`/profile/${onReview.author.id}`)
-        }}><img src={}>{onReview.author.image}</img></a>
-        <div className="rate">{ onReview.author.averageRate}</div>
-        <p className="username">{onReview.author.username}</p> */}
-        {/* Review Info */}
-        <p>{onReview.comment}</p>
-        <time dateTime={onReview.date}>{onReview.date}</time>
+        {/* User Author Info */} 
+        {view !== 'profile' ? <User value = {onReview.owner}/> : <User value = {onReview.author}/>}                
+        {/* Review Info */}        
+        <p className = "comment">{onReview.comment}</p>
+        <time dateTime={onReview.date} className = "date">{onReview.date}</time>
         <Rate value={onReview.rate} />
     </> 
 }

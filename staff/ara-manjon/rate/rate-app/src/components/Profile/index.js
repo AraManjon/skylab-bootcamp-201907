@@ -4,33 +4,31 @@ import logic from '../../logic'
 import { withRouter } from 'react-router-dom'
 import Review from '../Review'
 import User from '../User'
-
-export default withRouter(function ({history, id, goToFile}) {
-    const [user, setUser] = useState()
+                                  
+export default withRouter(function ({ id }) {
+    const [user, setUser] = useState() 
 
     useEffect(() => {
         (async () => {
-            const user = await logic.retrieveUserProfile(id)
+            const user = await logic.retrieveUserProfile(id)            
             setUser(user)
         })()
-    }, [history.location])
-debugger
-    return <>
+    }, [id])
 
-        <section>
+    return <>
+        <section className="profile">           
             {/* User Info */}
-            <div className= "profile__userInfo">
-            <a href="#" onClick={event =>{
-                event.preventDefault()
-                goToFile()
-            }}><img src=""/>Imagen User</a>
-            {<div className="rate">{user && user.averageRate}</div>}
-            {<p className="username">{user && user.username}</p>}
+            <div className= "profile__user">
+            {user &&           
+            <User value={ user }/> }
             </div>
-            {/* <div className= "profile__userInfo"><User onUserInfo={user && user}/></div> */}
+
             {/* User Reviews */}
             <div className= "profile__reviews">
-                <ul className= "reviews"> {user && user.reviews.map(review => <>
+                <ul className= "reviews">
+                    {user && !user.reviews.length>0 && <><li className="review">(· -,·)</li>
+                    <li className="title__medium">Not reviews yet</li></>} 
+                    {user && user.reviews.map(review => <>
                     <li className= "review" key={review.id}><Review onReview={review}/></li>
                     </>)}
                 </ul>        

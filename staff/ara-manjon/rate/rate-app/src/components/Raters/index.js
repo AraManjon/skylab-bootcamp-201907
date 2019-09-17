@@ -1,35 +1,18 @@
-/* import React, { useState, useEffect } from 'react'
-import logic from '../../logic'
+import React, { useContext } from 'react'
 import { withRouter } from 'react-router-dom'
-import Review from '../Review'
 import User from '../User'
+import Context from '../Context'
 
-export default withRouter(function ({ id }) {
-    const [user, setUser] = useState()
-
-    useEffect(() => {
-        (async () => {
-            const user = await logic.retrieveUserProfile(id)
-
-            setUser(user)     
-        })()
-    }, [])
-
+export default withRouter(function () {
+    const {raters} = useContext(Context)
     return <>
-
-    <section className="profile">
-
-        <div className="profile__userInfo">
-        
-        <User user ={user} />
-              
-        </div>
-        <div className= "profile__reviews">
-            <ul className= "reviews"> {user && user.reviews.map(review => <>
-                <li key={review.id}><Review review={review} /></li>
-                </>)}
+    {raters &&
+     (<section className="profile">
+        <div className= "profile__raters">
+            <ul className= "raters"> {raters.map(item => <>
+                <li key={item.id}><User value={item} /></li></>)}
             </ul>        
         </div>
-    </section>
+    </section>)}
     </>
-}) */
+}) 

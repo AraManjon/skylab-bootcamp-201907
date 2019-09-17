@@ -8,7 +8,6 @@ module.exports = async (req, res) => {
 
         res.json({ message: 'User profile retrieved correctly', user })        
     } catch ({ message }) {
-        debugger
         res.status(404).json({ error: message })
     }
 }

@@ -29,29 +29,27 @@ module.exports = function (id) {
     
     return (async () => {
 
-        const user = await User.findById({ _id: id})
-        if (!user) throw new Error(`user with id ${id} does not exist`)
         
-        let reviews = await Review.find({ author: id },{ __v:0, password:0}).lean()
-        reviews.forEach(review=>{
+        let reviews = await Review.find({ author: id },{ __v:0, password:0}).populate('owner').lean()
+        if (!reviews) throw new Error(`User with id ${id} does not author any review.`)
+     
+        reviews = reviews.map(review=>{
             review.id = review._id.toString()
             delete review._id.toString()
             
-            review.author.id = review.author[0]._id.toString()
-            delete review.author[0]._id.toString()
-        })
-        if (!reviews) throw new Error(`User with id ${id} does not author any review.`)
+            review.author.id = review.author._id.toString()
+            delete review.author._id.toString()
 
-        let reviewedUsers = await Promise.all(reviews.map(review => {
-           
-            return User.findById(review.owner, { __v:0, password:0}).lean()
-        }
-        ))
-        reviewedUsers.forEach(reviewedUser=>{
-            reviewedUser.id = reviewedUser._id.toString()
-            delete reviewedUser._id.toString()
+            review.owner.id = review.owner._id.toString()
+            delete review.owner._id.toString()
+            delete review.owner.__v
+            delete review.owner.password
+
+            return review
         })
-               
-        return { reviews, reviewedUsers }
+        reviews = reviews.sort(function(a,b){
+            if( b.date > a.date) return 1
+        })               
+        return reviews 
     })()
 }

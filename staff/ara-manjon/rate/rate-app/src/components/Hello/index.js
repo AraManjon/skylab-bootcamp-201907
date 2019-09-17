@@ -1,15 +1,20 @@
-import React, { useState, useEffect } from 'react'
-import Switch from "react-switch"
+import React from 'react'
+import './index.sass'
 
  
-function Hello({ toChange, onChecked }) {
-  return <section>
-            <h1>Hello</h1>
-            <label>
-        <span>Start to Rate</span>
-        <Switch onChange={toChange} checked={onChecked} />
-      </label>
-         </section>
+function Hello({ goRegister }) {
+  return <div className= "landing">
+            <h1 className="landing__title">Hello</h1>
+            <div className = "container-foot">
+              <label className= "switch" for="checkbox">
+                <input id= "checkbox" type="checkbox" onChange={ event =>{
+                  
+                  goRegister()
+                }}/>
+                <div className="slider"></div>
+              </label>
+            </div>
+         </div>
 }
 
 export default Hello

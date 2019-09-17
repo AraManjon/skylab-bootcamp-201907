@@ -24,12 +24,12 @@ router.post('/auth', jsonBodyParser, authenticateUser)
 router.get('/users/', [tokenMiddleware, jsonBodyParser], retrieveUser)
 router.patch('/users', [tokenMiddleware, jsonBodyParser], updateUser)
 router.delete('/users', [tokenMiddleware, jsonBodyParser], unregisterUser)
-router.post('/users/image', tokenMiddleware, uploadPhoto)
+router.post('/users/upload', [tokenMiddleware, jsonBodyParser], uploadPhoto)
 router.get('/users/:id', [tokenMiddleware, jsonBodyParser], retrieveUserProfile)
 
 //USER GEO
-router.patch('/geolocation', [tokenMiddleware, jsonBodyParser], updateGeo)
-router.get('/geolocation/:distance', [tokenMiddleware, jsonBodyParser], retrieveAllGeo)
+router.post('/geolocation', [tokenMiddleware, jsonBodyParser], updateGeo)
+router.post('/geolocation-users/:distance', [tokenMiddleware, jsonBodyParser], retrieveAllGeo)
 
 //REVIEW
 router.post('/review/:userToReviewId', [tokenMiddleware, jsonBodyParser], registerReview)

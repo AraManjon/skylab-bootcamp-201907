@@ -1,0 +1,28 @@
+
+const REACT_APP_API_URL = process.env.REACT_APP_API_URL
+
+export default function (image) {
+
+    var formData = new FormData();
+    formData.append('image', image);
+    debugger
+    return (async () => {
+       
+        const response = await fetch(`${REACT_APP_API_URL}/users/upload`, {
+            method: 'post',
+            headers: {
+                'authorization': `bearer ${this.__token__}`
+            },
+            body: formData
+        })
+        
+        if (response.status !== 200) {
+            const { error } = await response.json()
+            throw new Error(error)
+        } 
+        const { message } = await response.json()
+        return message
+    })()
+}
+
+

@@ -1,0 +1,79 @@
+@import ../../style/base-setting
+
+.landing
+    height: 100vh
+    display: flex
+    flex-direction: column
+    height: 100vw    
+    &__title
+        &--form
+            @extend %text-title
+            font-size: 2.2rem
+            padding-top: 70px
+            padding-bottom: 30px
+.container-form
+    display: flex
+    flex-direction: column
+    width: 85vw
+    margin: 20px auto
+    position: relative
+    &__title
+        &--little
+            @extend %text-little
+            margin-top: 10px
+        &--slim
+            @extend %text-slim
+
+.form-text
+    position: relative
+    border-top: 0.07rem solid $color-white
+    &--end
+        position: relative
+        border-top: 0.07rem solid $color-white
+        border-bottom: 0.07rem solid $color-white
+
+
+.inpt
+    @extend %button-none
+    @extend %text-link
+    background-color: none
+    height: 60px
+    padding: 10px 5px 5px 120px
+    text-align: left
+    font-size: 1.3rem
+    position: relative
+    opacity: 0.7
+
+.inpt[text=text]
+    color: $color-white
+.inpt[type=submit]
+    color: $color-white
+
+\::placeholder
+    color: $color-white
+    opacity: 0.3
+
+.static-inpt
+    @extend %text-link
+    text-align: left
+    color: $color-white
+    font-size: 1.3rem
+    position: absolute
+    left: 10px
+    top: 20px
+      
+
+    
+.container-foot
+    text-align: center
+    width: 100vw
+    height: 40px
+    position: fixed
+    bottom: 50px
+    z-index: 1
+
+    &__title
+        &--medium
+            @extend %text-link
+            @extend %button-none
+            font-size: 2rem

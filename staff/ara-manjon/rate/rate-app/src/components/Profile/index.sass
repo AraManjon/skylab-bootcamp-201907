@@ -1,0 +1,55 @@
+@import ../../style/base-setting
+.profile
+    display: flex
+    flex-direction: column
+.profile-user
+    position: fixed
+    background-color: $color-red
+    height: 370px
+    width: 100%
+    margin: 0 auto
+    display: flex
+    border-bottom: 0.05rem solid $color-white
+    flex-direction: column
+    width: 90%
+    margin: 0 5%
+    z-index: 1
+    align-items: center
+.rate
+    @extend %text-title
+    text-align: right
+    font-size: 3.8rem
+    font-weight: 200
+    font-style: $font-lato
+    z-index: 2
+    opacity: 0.9  
+    top: 120px
+    margin-top: 305px
+            
+.username-logged
+    font-size: 2rem
+    @extend %text-title
+    letter-spacing: 0.1rem
+    text-align: left
+    font-weight: 200
+    font-style: $font-lato
+    z-index: 2
+    opacity: 0.9
+    float: right
+    height: 46px
+    padding: 0 10px
+    padding-top: 332px
+    position: fixed
+    width: 70%
+.not-review
+    font-size: 3rem
+    @extend %text-title
+    padding-top: 10%
+    opacity: 0.7
+    &__title
+        font-size: 1.2rem
+        @extend %text-title
+        padding-top: 5%
+        opacity: 0.7
+
+

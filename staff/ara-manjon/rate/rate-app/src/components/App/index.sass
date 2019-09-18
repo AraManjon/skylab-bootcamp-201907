@@ -1,0 +1,164 @@
+@import ../../style/base-setting
+
+.header-container
+    height: 80px
+    width: 100%
+    position: fixed
+    background-color: $color-red
+    z-index: 2
+.container-nav
+    position: fixed
+    display: flex
+    flex-direction: column
+    height: 60px
+    margin: 10px auto
+    width: 100%
+    top: 0
+.container-logo
+    margin: 0 auto
+    align-self: center
+    position: absolute
+    &__link
+        @extend %text-link
+        letter-spacing: 2px
+        font-weight: 800
+        font-size: 3rem
+        &:link,
+        &:visited,
+        &:hover,
+        &:avtive
+            text-decoration-style: none
+
+
+.container-profile
+    position: fixed
+    display: flex
+    flex-direction: row
+    height: 60px
+    margin: 10px auto
+    top: 0
+    right: 20px
+    align-items: center
+    &__link
+        @extend %text-link
+        font-weight: 500
+        font-size: 1rem
+        &:link,
+        &:visited,
+        &:hover,
+        &:avtive
+            text-decoration-style: none
+
+
+.container-menu
+    display: block
+    position: relative
+    top: 19px
+    left: 23px
+    width: 40px
+    margin: 1px
+    -webkit-user-select: none
+    user-select: none
+    z-index: 2
+    &__a
+        text-decoration: none
+        @extend %text-slim
+        color: $color-white
+        transition: color 0.3s ease
+        line-height: 40px
+        font-weight: 500
+        padding-left: 45px
+    &:hover
+        opacity: 0.9
+
+
+.container-menu
+    &__input
+        display: block
+        width: 30px
+        height: 22px
+        position: absolute
+        top: -7px
+        left: -5px        
+        cursor: pointer        
+        opacity: 0 
+        z-index: 2
+        
+        -webkit-touch-callout: none
+.container-menu
+    span
+        display: block
+        width: 30px
+        height: 3px
+        margin-bottom: 5px
+        position: relative        
+        background: $color-white
+        border-radius: 1px
+        z-index: 2
+        transform-origin: 5px 0px
+        transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0), background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),opacity 0.55s ease                              
+.container-menu 
+    span:first-child
+        transform-origin: 0% 0%
+
+
+.container-menu 
+    span:nth-last-child(2)
+        transform-origin: 0% 100%
+
+.container-menu 
+    &__input:checked ~ span
+        opacity: 1
+        transform: rotate(45deg) translate(-2px, -1px)
+        background: $color-white
+.container-menu 
+    &__input:checked ~ span:nth-last-child(3)
+        opacity: 0
+        transform: rotate(0deg) scale(0.2, 0.2)
+.container-menu 
+    &__input:checked ~ span:nth-last-child(2)
+        transform: rotate(-45deg) translate(0, -1px)
+
+.menu 
+    &__li
+        padding: 0
+        font-size: 1.2rem
+        transition: all 250ms cubic-bezier(0.675, 0.420, 0.090, 0.870)
+        z-index: 2
+    &:hover
+        background-color: $color-white
+
+.container-menu 
+    &__input:checked ~ ul
+        transform: none
+.container-menu
+    &__hamburguer
+        position: absolute
+        width: 200px
+        margin: 0px 0 0 -50px
+        padding-left: 0
+        top: 48px
+        padding-top: 0px  
+        background: $color-red
+        list-style-type: none
+        -webkit-font-smoothing: antialiased
+        z-index: 2 
+        transform-origin: 0% 0%
+        transform: translate(-100%, 0)        
+        transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0)
+
+.footer-fixed
+    height: 60px
+    background-color: $color-red
+    position: fixed
+    width: 100%
+    bottom: 0
+
+   
+
+
+
+
+
+.main-container
+    padding-top: 80px

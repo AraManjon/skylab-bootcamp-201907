@@ -28,19 +28,25 @@ module.exports = function (UserId, UserIdtoReview) {
     validate.string(UserIdtoReview, 'id')
 
     return (async () => {
-        const user = await User.findOne({ _id: UserIdtoReview}, { _id: 0, password: 0 }).lean()
+        const user = await User.findOne({ _id: UserIdtoReview}, { password: 0 }).populate('reviews').lean()
+        user.id = user._id.toString()
+        delete user._id 
+        debugger
+
         if (!user) throw new Error(`user with id ${UserIdtoReview} does not exist`)
 
-        let reviewsUser= user.reviews.map(review=>review._id.toString())
+        let reviewsUser= user.reviews.map(review=>{
+            review.id = review._id.toString()
+            delete review._id 
 
-        let results = await Promise.all(reviewsUser.map( async (reviewUser) =>{
-            return await Review.find({_id: reviewUser}, {__v: 0}).lean()
-        }))
+            review.author.id = review.author._id.toString()
+            delete review.author._id
+            delete review.author.__v
+            return user
+        })
         
-    
-        results.forEach((item, index) => {
-            
-            if(item[index].author[0]._id.toString() === UserId){
+        reviewsUser.forEach((item, index) => {
+            if(item.reviews[index].author.id === UserId){
                 const createAt= moment(item.date)
                 const getValidFrom= moment(new Date().toString())
     

@@ -1,0 +1,70 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap)
+$color-red: #ff4040
+$color-red-dark: #db3737
+$color-black: #000000
+$color-white: #ffffff
+$color-green-hard: #31997c
+$color-yellow: #FDF9C0
+$font: 'Open Sans', Arial, Helvetica, sans-serif
+$font-lato: 'Lato', Arial, Helvetica, sans-serif
+
+%text-title
+    color: $color-white
+    font-family: $font
+    font-weight: 500
+    text-align: center
+    text-decoration: none
+    font-size: 4rem
+    padding-top: 70%
+
+%text-little
+    color: $color-white
+    font-family: $font
+    font-weight: 200
+    text-align: center
+    text-decoration: none
+    font-size: 1.2rem
+
+%text-link
+    color: $color-white
+    font-family: $font
+    font-weight: 500
+    text-align: center
+    text-decoration: none
+    font-size: 1.6rem
+
+%text-slim
+    color: $color-white
+    font-family: $font-lato
+    font-weight: 300
+    text-align: center
+    text-decoration: none
+    font-size: 1.2rem
+
+%button-none        
+    border: none
+    outline: none
+    background: none
+
+*
+    margin: 0
+    padding: 0
+    box-sizing: border-box
+body
+    width: 100vw
+    height: 100vw
+    min-width: 375px
+    background-color: $color-red
+input:-webkit-autofill
+  -webkit-text-fill-color: $color-white !important
+  opacity: 0.7 !important
+
+input:-webkit-autofill
+  -webkit-box-shadow: inset !important
+  transition: background-color 5000s ease-in-out 0s
+  
+  &:hover, &:focus, &:active
+    -webkit-box-shadow: inset !important
+    transition: background-color 5000s ease-in-out 0s
+    
+    

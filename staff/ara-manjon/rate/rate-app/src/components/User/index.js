@@ -7,7 +7,7 @@ import Context from '../Context'
 
 
  function User({ history, value }) {
-    const { view, setView } = useContext(Context)
+    const { view, setView, profile } = useContext(Context)
 
     const handleSubmit = event => {
         event.preventDefault()
@@ -57,35 +57,41 @@ import Context from '../Context'
 
 {/* Profile User guest*/}
     {logic.getUserId() !== value.id && view === 'profile' &&
-    <> <a href= "" onClick={event =>{
+    <> <div className="info-photo"></div><a href= "" onClick={event =>{
         event.preventDefault()
         
-        //onUserToRate = ()
+        
         handleGoToRating(value) 
-    }}><img className="imgRedonda" src={value.image}></img></a>
-    <div className="rate">{value.averageRate}</div>
-    <h4 className= "username">{value.username}</h4>    
+    }}><img className="imgRedonda--little" src={value.image}></img></a>
+    <div className= "info-user-photo">
+    <div className="rate-logged">{value.averageRate}</div>
+    <h4 className= "username-logged'">{value.username}</h4>
+    </div>  
     </>}
 
 
 {/* User logged in without image*/}    
     { logic.getUserId() === value.id && !value.image &&
-    <> <form method='post' onSubmit={handleSubmit} encType="multipart/form-data"> 
-            <label>            
-                <input type="file" name="logo" /* onChange={handleSubmit} */></input>
+    <> <form className= "charge-photo-form" method='post' onSubmit={handleSubmit} encType="multipart/form-data"> 
+            <label className= "charge-photo-lbl">            
+                <input className= "charge-photo-inpt" type="file" name="logo" title="Image"></input>
             </label>            
-                <button>> save</button>      
+                <button className= "charge-photo-save">> charge file and save</button>      
         </form>
-
-        {<div className="rate">{value.averageRate}</div>}
-        {<p className="username">{value.username}</p>}     
+        <div className= "info-user-photo">
+        {<div className="rate-logged">{value.averageRate}</div>}
+        {<p className="username-logged">{value.username}</p>}
+        </div>     
     </> }
 
 {/* User logged in with image*/} 
-    {logic.getUserId() === value.id && value.image &&
-    <> <img className="image" src={value.image} className="imgRedonda"></img>
-    <div className="rate">{value.averageRate}</div>
-    <h4 className= "username">{value.username}</h4>    
+    {logic.getUserId() === value.id && value.image && 
+    
+    <> <img src={value.image} className="imgRedonda"></img>
+    <div className= "info-user-photo">
+    <div className="rate-logged">{value.averageRate}</div>
+    <div className= "username-logged">{value.username}</div>
+    </div>      
     </>}
     </>
 }

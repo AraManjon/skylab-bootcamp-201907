@@ -1,8 +1,94 @@
+@import ../../style/base-setting
 .imgRedonda 
-    width: 300px
-    height: 300px
-    border-radius: 150px
+    width: 320px
+    height: 320px
+    border-radius: 160px
+    object-fit: cover
+    border: 0.01rem solid $color-red-dark
+    box-shadow: 0px 0px 7px 0px rgba(212, 97, 97,1)
+    margin: 10px auto
+    position: inherit
+    align-self: center
+    z-index: 0
+    background-color: $color-red-dark
+    @extend %button-none
     &--little
         width: 100px
         height: 100px
         border-radius: 50px
+        object-fit: cover
+        background-color: $color-white
+        opacity: 0.7
+        box-shadow: 0px 0px 7px 0px rgba(255,255,255,1)
+.charge-photo-lbl
+    justify-self: center
+    margin: auto
+.charge-photo-inpt
+    width: 320px
+    height: 320px
+    border-radius: 160px
+    object-fit: cover
+    border: 0.01rem solid $color-red-dark
+    box-shadow: 0px 0px 7px 0px rgba(212, 97, 97,1)
+    margin: 10px auto
+    position: inherit
+    align-self: center
+    z-index: 0
+    background-color: $color-red-dark
+    @extend %button-none
+    &:focus,
+    &:hover,
+    &:active
+        box-shadow: none
+    &--little
+        width: 100px
+        height: 100px
+        border-radius: 50px
+        object-fit: cover
+        background-color: $color-white
+        opacity: 0.7
+        box-shadow: 0px 0px 7px 0px rgba(255,255,255,1)
+        &:focus,
+        &:hover,
+        &:active
+            box-shadow: none
+.charge-photo-form
+    justify-content: center
+    align-items: center
+    display: flex
+    flex-direction: column
+    position: fixed
+.charge-photo-inpt[text=text]
+    color: $color-white
+    font-size: 1rem
+.charge-photo-inpt[type=submit]
+    color: $color-white
+.charge-photo-inpt[type=file]
+    color: $color-red-dark
+\::placeholder
+    color: $color-white
+    opacity: 0.3
+.charge-photo-save
+    color: $color-white
+    font-size: 1.4rem
+    position: absolute
+.rate-logged
+    @extend %text-title
+    text-align: right
+    font-size: 3.8rem
+    font-weight: 200
+    font-style: $font-lato
+    z-index: 2
+    opacity: 0.9  
+    top: 312px
+    margin-top: 71px
+    width: 20%
+    position: fixed
+    padding-top: 0
+    right: 25px
+.info-user-photo
+    display: flex
+    width: 100%
+    position: relative
+    flex-dirction: column
+

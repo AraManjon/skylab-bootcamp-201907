@@ -35,8 +35,8 @@ export default withRouter(function () {
             {/* User Reviews */}
             <div className= "profile__reviews">
                 <ul className= "reviews">
-                    {reviewsUser && !reviewsUser.length>0 && <><li className="review">(· -,·)</li>
-                    <li className="title__medium">Not reviews yet</li></>}
+                    {reviewsUser && !reviewsUser.length>0 && <><li className="not-review">(· -,·)</li>
+                    <li className="not-review__title">Not reviews yet</li></>}
                     {reviewsUser && reviewsUser.map(review => <>
                     <li className= "review" key={review.id}><Review onReview={review}/></li>
                     </>)}

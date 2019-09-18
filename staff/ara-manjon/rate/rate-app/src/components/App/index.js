@@ -18,6 +18,7 @@ import ReviewsUser from '../ReviewsUser'
 export default withRouter(function ({ history }) {
   const [view, setView] = useState(logic.isUserLoggedIn() ? 'profile' || 'raters' || 'search' : undefined) 
   const [raters, setRaters] = useState()
+  const [profile, setProfile] = useState()
   
 
 /* LOGIN - AUTHENTICATE - REGISTER */
@@ -137,9 +138,9 @@ useEffect(() => {
                 <span></span>
                 <span></span>
                 <ul className="container-menu__hamburguer">
-                    <li><a className="container-menu__a" href="" onClick={handleGoToSearch}>Search</a></li>
-                    <li><a className="container-menu__a" href="" onClick={handleGoToMyRates} >My rates</a></li>
-                    <li><a className="container-menu__a" href="" onClick={handleLogout}>Log Out</a></li>
+                    <li className="container-menu__li"><a className="container-menu__a" href="" onClick={handleGoToSearch}>Search</a></li>
+                    <li className="container-menu__li"><a className="container-menu__a" href="" onClick={handleGoToMyRates} >My rates</a></li>
+                    <li className="container-menu__li"><a className="container-menu__a" href="" onClick={handleLogout}>Log Out</a></li>
                 </ul>
         </div>
 
@@ -160,7 +161,7 @@ useEffect(() => {
 
     {logic.isUserLoggedIn() &&
     <> 
-    <Context.Provider value = {{raters, setRaters, view, setView}}>  
+    <Context.Provider value = {{raters, setRaters, view, setView, setProfile, profile}}>  
     <Route exact path="/profile/:id" render={props => <Profile id={props.match.params.id}/>} />
     <Route exact path="/raters" render={() => <Raters />} />
     <Route exact path="/search" render={() => <Search />} />
@@ -172,6 +173,7 @@ useEffect(() => {
     </main>
 
     <footer>
+      <div className="footer-fixed"></div>
 
     </footer>
     </div>

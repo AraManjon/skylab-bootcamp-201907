@@ -47,7 +47,7 @@ module.exports = function (id) {
             averageRate = rate.reduce((previous, current) => current += previous) / rate.length
         }
      
-        averageRate = averageRate.toFixed(2)
+        averageRate = averageRate.toFixed(1)
         //retrieve reviews with autor
         const reviews = user.reviews
         const reviewsWithAuthor = await Promise.all(reviews.map(async (review) => {

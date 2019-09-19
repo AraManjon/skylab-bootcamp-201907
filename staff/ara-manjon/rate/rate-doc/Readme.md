@@ -35,8 +35,6 @@ User can:
 #### **User**
 ![](./image/user-flow.jpg)
 
-#### **Guest**
-![](./image/guest-flow.png)
 ## **Tecnical Description**
 #### **Blocks**
 
@@ -47,7 +45,7 @@ User can:
 
 #### **React Components**
 #### **Data Model**
-![](./image/data-model.svg)
+![](./image/schemas.jpg)
 #### **Code Coverage**
 
 ## **Technologies**

@@ -4,7 +4,7 @@
     height: 320px
     border-radius: 160px
     object-fit: cover
-    border: 0.01rem solid $color-red-dark
+    border: 5px solid white
     box-shadow: 0px 0px 7px 0px rgba(212, 97, 97,1)
     margin: 10px auto
     position: inherit
@@ -15,10 +15,10 @@
     &--little
         width: 100px
         height: 100px
+        border: 2px solid white
         border-radius: 50px
         object-fit: cover
-        background-color: $color-white
-        opacity: 0.7
+        background-color: $color-red-dark
         box-shadow: 0px 0px 7px 0px rgba(255,255,255,1)
 .charge-photo-lbl
     justify-self: center
@@ -57,7 +57,7 @@
     align-items: center
     display: flex
     flex-direction: column
-    position: fixed
+
 .charge-photo-inpt[text=text]
     color: $color-white
     font-size: 1rem
@@ -86,9 +86,41 @@
     position: fixed
     padding-top: 0
     right: 25px
+
 .info-user-photo
+    color: white
     display: flex
+    padding: 2vh 
+    align-items: center
     width: 100%
     position: relative
     flex-dirction: column
+    @extend %text-little
+    font-size: 1rem
+
+
+.user-log
+    font-size: 2rem
+    @extend %text-title
+    letter-spacing: 0.1rem
+    text-align: left
+    font-weight: 200
+    font-style: $font-lato
+    z-index: 2
+    opacity: 0.9
+    float: right
+    padding: 0 10px
+    width: 70%
+    &--little
+        font-size: 1rem
+        width: 100px
+        @extend %text-title
+.user
+    &--little
+        font-size: 1rem
+        width: 100px
+        @extend %text-title
+        
+
+
 

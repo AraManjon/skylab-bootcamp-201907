@@ -1,4 +1,5 @@
-.rate
+@import ../../style/base-setting
+.rate-big
   float: left
   height: 46px
   padding: 0 10px
@@ -17,7 +18,7 @@
         color: #ccc
         &:before
           content: '★'
-.rate
+.rate-big
   > input:checked ~ label
     color: #ffc700
   &:not(:checked) > label:hover
@@ -32,3 +33,26 @@
           color: #c59b08
     label:hover ~ input:checked ~ label
       color: #c59b08
+.send
+    display: flex
+    flex-direction: column
+    width: 85vw
+    margin: 1% auto
+    align-items: center    
+    @extend %text-link
+    @extend %button-none
+    font-size: 2rem
+    text-align: center
+    width: 100vw
+    top: 100%
+    padding: 1%
+
+.rate-form
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+
+.comment
+  background-color: $color-red
+  height: 20vh

@@ -3,7 +3,7 @@ const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
 export default function (callback) {
      let latitude, longitude, users
-     let distance = '1000'
+     let distance = '200'
 
     navigator.geolocation.getCurrentPosition(function (position) {
         latitude = position.coords.latitude

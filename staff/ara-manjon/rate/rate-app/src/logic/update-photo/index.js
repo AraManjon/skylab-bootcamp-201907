@@ -5,7 +5,7 @@ export default function (image) {
 
     var formData = new FormData();
     formData.append('image', image);
-    debugger
+
     return (async () => {
        
         const response = await fetch(`${REACT_APP_API_URL}/users/upload`, {

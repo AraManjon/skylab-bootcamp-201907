@@ -31,7 +31,7 @@ module.exports = function (UserId, UserIdtoReview) {
         const user = await User.findOne({ _id: UserIdtoReview}, { password: 0 }).populate('reviews').lean()
         user.id = user._id.toString()
         delete user._id 
-        debugger
+        
 
         if (!user) throw new Error(`user with id ${UserIdtoReview} does not exist`)
 

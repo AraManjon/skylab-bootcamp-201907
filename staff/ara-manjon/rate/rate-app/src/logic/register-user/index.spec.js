@@ -9,7 +9,7 @@ const REACT_APP_DB_URL_TEST = process.env.REACT_APP_DB_URL_TEST
 
 describe('logic - register user', () => {
     let name, surname, username, email, password
-    debugger
+    
 
     beforeAll(() => database.connect(REACT_APP_DB_URL_TEST))
 
@@ -23,7 +23,7 @@ describe('logic - register user', () => {
     })
 
     it('should succeed on correct data', async () => {
-        debugger
+        
         const response = await registerUser(name, surname, username, email, password)
 
         expect(response).toBeUndefined()

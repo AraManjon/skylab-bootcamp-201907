@@ -25,6 +25,11 @@
     opacity: 0.9  
     top: 120px
     margin-top: 305px
+    &--little
+        @extend %text-little
+        width: 100px
+        font-size: 30px
+
             
 .username-logged
     font-size: 2rem
@@ -41,15 +46,39 @@
     padding-top: 332px
     position: fixed
     width: 70%
+    
+.profile_reviews
+    align-items: center
+    padding: 0 10px
+    width: 100%
+    display: flex
+    flex-direction: column
+    align-items: center
+    position: relative
+    padding: 40% 0
+.reviews
+    top: 40%
+    width: 100%
+    flex-direction: column
+    display: flex
+    align-items: center
 .not-review
     font-size: 3rem
     @extend %text-title
-    padding-top: 10%
     opacity: 0.7
     &__title
         font-size: 1.2rem
         @extend %text-title
         padding-top: 5%
         opacity: 0.7
+    &--big
+        font-size: 3rem
+        @extend %text-title
+        top: 40%
+        opacity: 0.7
+        list-style: none
+
+
+
 
 

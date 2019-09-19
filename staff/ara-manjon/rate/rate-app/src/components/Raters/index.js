@@ -10,7 +10,7 @@ export default withRouter(function () {
      (<section className="profile">
         <div className= "profile__raters">
             <ul className= "raters"> {raters.map(item => <>
-                <li key={item.id}><User value={item} /></li></>)}
+                <li key={item.id}><User value={item} type={'little'}/></li></>)}
             </ul>        
         </div>
     </section>)}

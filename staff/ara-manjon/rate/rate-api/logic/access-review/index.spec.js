@@ -75,7 +75,7 @@ describe('logic - access a review', () => {
     it('should succeed on correct access a review', async () =>{
 
         const response = await accessReview(id, id1)
-        debugger
+        
         expect(response).not.to.exist
     })
 

@@ -6,9 +6,9 @@ import Review from '../Review'
 import User from '../User'
 import Context from '../Context'
                                   
-export default withRouter(function ({ id }) {
-    const [user, setUser, view] = useState() 
-    const { setProfile } = useContext(Context)
+export default withRouter(function ({ history, id }) {
+    const [user, setUser] = useState() 
+    const { setProfile , view, setView} = useContext(Context)
 
     useEffect(() => {
         (async () => {
@@ -20,13 +20,30 @@ export default withRouter(function ({ id }) {
         })()
     }, [id])
 
+    const handleGoToRating = async ( value ) => {
+        setView('rate')
+        history.push(`/rate/${value.id}`)        
+    }
+
     return <>
         <section className="profile">           
             {/* User Info */}
-            <div className= "profile-user">
             {user &&           
-            <User value={ user }/> }
-            </div>
+            <User  value={ user } type={'big'}/>}
+            {/*user && <div className= "profile-user">
+            <a href= "#" onClick={event =>{
+                 event.preventDefault()
+        
+        
+                handleGoToRating(user) 
+            }}>
+                <img className={"imgRedonda"} src={user.image}></img>
+            </a>
+                <div className= "info-user-photo">
+                    <div className="rate-logged">{user.averageRate}</div>
+                        <h4 className="user-log">{user.username}</h4>
+                </div> 
+        </div>*/}
 
             {/* User Reviews */}
             <div className= "profile__reviews">

@@ -92,6 +92,7 @@ useEffect(() => {
  async function asyncRetrieveUsersGeo(){
     try {
         await logic.retrieveUsersGeo(callback)
+        
     } catch (error) {
         console.log(error.message)
     }
@@ -171,10 +172,5 @@ useEffect(() => {
     </>}
     
     </main>
-
-    <footer>
-      <div className="footer-fixed"></div>
-
-    </footer>
     </div>
 })

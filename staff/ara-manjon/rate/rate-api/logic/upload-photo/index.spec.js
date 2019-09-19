@@ -27,7 +27,7 @@ describe('logic - upload image', () => {
         const result = await updatePhoto(id, image)
         expect(result).not.to.exist
         const user = await User.findById(id)
-        debugger
+        
         expect(user).to.exist
         expect(user.image).to.exist
         expect(user.image).to.have.length.above(0)

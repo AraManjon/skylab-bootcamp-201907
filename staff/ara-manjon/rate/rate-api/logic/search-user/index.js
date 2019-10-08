@@ -5,6 +5,16 @@ const { models: { User } } = require('rate-data')
  * 
  * @param {string} searchParams fiels
  * 
+ * @throws {Error} user with id does not exist
+ * 
+ * @throws {Error} user name, surname, username, email is empty or blank
+ * 
+ * @throws {Error} user name, surname, username, email is not a string
+ * 
+ * @throws {Error} not search params introduced
+ * 
+ * @throws {Error} search params is not an object
+ * 
  * @returns {Promise}
 */
 

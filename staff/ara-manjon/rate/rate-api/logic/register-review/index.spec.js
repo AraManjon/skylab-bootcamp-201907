@@ -2,6 +2,7 @@ require('dotenv').config()
 const { expect } = require('chai')
 const registerReview = require('.')
 const { database, models: { User, Review } } = require('rate-data')
+
 const { env: { DB_URL_TEST }} = process
 
  
@@ -26,7 +27,7 @@ describe('logic - register a review', () => {
         longitude= 2.199926
         latitude= 41.398414
 
-        //user 1 near skylab
+        //user1 near skylab
         name1 = `name-${Math.random()}`
         surname1 = `surname-${Math.random()}`
         username1 = `username-${Math.random()}`
@@ -35,14 +36,14 @@ describe('logic - register a review', () => {
         longitude1 = 2.199955
         latitude1 = 41.398425
 
-        //user 2 near skylab
+        //user2 near skylab
         name2 = `name-${Math.random()}`
         surname2 = `surname-${Math.random()}`
         username2 = `username-${Math.random()}`
         password2 = `password-${Math.random()}`
         email2 = `email-${Math.random()}@domain.com`
 
-
+        //delete user database
         await User.deleteMany()
 
         //user skylab
@@ -50,84 +51,68 @@ describe('logic - register a review', () => {
         user = await User.create({ location, name, surname, username, email, password })
         id = user.id
 
-        //user 1 near skylab
+        //user1 near skylab
         const location1 = {type: 'Point', coordinates: [longitude1, latitude1]}
         user1 = await User.create({ location: location1, name: name1, surname: surname1, username: username1,  email: email1, password: password1})
         id1 = user1.id
         
-        //user 2 near skylab
+        //user2 near skylab
         const location2 = {type: 'Point', coordinates: [longitude1, latitude1]}
         user2 = await User.create({ location: location2, name: name2, surname: surname2, username: username2,  email: email2, password: password2})
         id2 = user2.id
 
-        //review 1
+        //delete reviews data base
         await Review.deleteMany()
 
+        //review to add to user1
         comment=`comment-${Math.random()}`
         rate= 3
-        //review 2 added to user 1
-            
+
+        //review added to user1            
         comment1=`comment-${Math.random()}`
         response1=`response-${Math.random()}`
         rate1= 2
         date1= new Date().toString()
         
-        review = await Review.create({comment:comment1, rate:rate1, date:date1, author: user2._id.toString(), owner: user1.id})
+        //create review to user1
+        review = await Review.create({comment: comment1, rate: rate1, date: date1, author: user2._id.toString(), owner: user1.id})
         user1.reviews.push(review.id)
         await user1.save()
-      
-
     })
 
     it('should succeed on correct registered review', async () =>{
+        
         const response = await registerReview(id, id1, comment, rate) 
-        
-            expect(response).not.to.exist
-            return ( async () => {
-                const user = await User.findOne({_id: id1})
+        expect(response).not.to.exist
 
-                let reviewsUser = user.reviews.map(review=>review._id.toString())
+        return ( async () => {
 
-                let results = await Promise.all(reviewsUser.map( async (reviewUser) =>{
-                    return await Review.find({_id: reviewUser}, {__v: 0}).lean()
-                }))
+            const user = await User.findOne({_id: id1}, { password: 0, __v: 0 }).populate('reviews').lean()
+            
+            //user
+            expect(user).to.exist
+            expect(user).to.be.an('object')    
+            expect(user._id.toString()).to.equal(id1)
 
-                results.forEach((item, index)=>{
-                    if(item[index].author[0]._id.toString() === id){
-                        expect(item.comment).to.equal(comment)
-                        expect(item.rate).to.equal(rate)
-                        expect(item.author).to.equal(id._id.toString())
-                        expect(item.owner).to.equal(id1.id)
-                    }
-                }) 
-                           
-        })
+            //user review
+            user.reviews.forEach( item => {
+                if(item.author._id.toString() === id){
+                    expect(item.comment).to.equal(comment)
+                    expect(item.comment).to.be.a('string')
+
+                    expect(item.rate).to.equal(rate)
+                    expect(review.rate).to.be.a('number')
+
+                    expect(item.author._id.toString()).to.equal(id)                    
+                    expect(item.author._id.toString()).to.be.a('string')   
+
+                    expect(item.owner._id.toString()).to.equal(id1)
+                    expect(item.owner._id.toString()).to.be.a('string')
+                }
+            })                            
+        })()
     })
 
-    it('should succeed on correct registered review', async () =>{
-        const response = await registerReview(id, id2, undefined, rate) 
-        
-            expect(response).not.to.exist
-            return ( async () => {
-                const user = await User.findOne({_id: id1})
-
-                let reviewsUser = user.reviews.map(review=>review._id.toString())
-
-                let results = await Promise.all(reviewsUser.map( async (reviewUser) =>{
-                    return await Review.find({_id: reviewUser}, {__v: 0}).lean()
-                }))
-
-                results.forEach((item, index)=>{
-                    if(item[index].author[0]._id.toString() === id){
-                        expect(item.comment).not.to.exist
-                        expect(item.rate).to.equal(rate)
-                        expect(item.author).to.equal(id._id.toString())
-                        expect(item.owner).to.equal(id1.id)
-                    }
-                }) 
-                           
-        })
-    })
     it('should fail on rate is not a number', async () =>{
         try{
             await registerReview(id, id1, comment, 's')  
@@ -135,6 +120,7 @@ describe('logic - register a review', () => {
             expect(message).to.equal('rate with value s is not a number')            
         }
     })
+
     it('should fail on non can add a comment if not rate', async () =>{
         try{
             await registerReview(id, id1, comment, undefined)  
@@ -142,13 +128,16 @@ describe('logic - register a review', () => {
             expect(message).to.equal('you should to rate to add a comment')            
         }
     })
-    it('should fail on rate is not a number', async () =>{
+
+    it('should fail on rate should add a number', async () =>{
         try{
             await registerReview(id, id1, comment, '')  
-        }catch({message}){            
+        }catch({message}){
+                        
             expect(message).to.equal('you should to add a correct number')            
         }
     })
+
     it('should fail on rate is not a correct number', async () =>{
         try{
             await registerReview(id, id1, comment, 7)  
@@ -163,6 +152,7 @@ describe('logic - register a review', () => {
             expect(message).to.equal('you should to add a correct number')            
         }
     })
+
     it('should fail on user id is not a string', async () =>{
         try{
             await registerReview(123, id1, comment, rate) 
@@ -171,6 +161,7 @@ describe('logic - register a review', () => {
             expect(message).to.equal('id with value 123 is not a string')            
         }
     }) 
+
     it('should fail on user id is not a string', async () =>{
         try{
             await registerReview(id, 123, comment, rate) 
@@ -179,6 +170,7 @@ describe('logic - register a review', () => {
             expect(message).to.equal('id with value 123 is not a string')            
         }
     }) 
+
     it('should fail on user id not exist', async () =>{
         const fakeid = '5e711645a4734dc78985edb0'
         try{
@@ -187,7 +179,8 @@ describe('logic - register a review', () => {
 
             expect(message).to.equal(`user with id ${fakeid} does not exist`)            
         }
-    }) 
+    })
+
     it('should fail on user id not exist', async () =>{
         const fakeid = '5e711645a4734dc78985edb0'
         try{
@@ -197,6 +190,7 @@ describe('logic - register a review', () => {
             expect(message).to.equal(`user with id ${fakeid} does not exist`)            
         }
     })
+
     it('should fail on user id is empty or blank', async () =>{
         try{
             await registerReview('', id1, comment, rate) 
@@ -204,7 +198,8 @@ describe('logic - register a review', () => {
 
             expect(message).to.equal('id is empty or blank')            
         }
-    }) 
+    })
+
     it('should fail on user id is empty or blank', async () =>{
         try{
             await registerReview(id, '', comment, rate) 

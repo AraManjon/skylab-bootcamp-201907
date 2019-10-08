@@ -2,6 +2,7 @@ require('dotenv').config()
 const { expect } = require('chai')
 const updateUser = require('.')
 const { database, models: { User } } = require('rate-data')
+
 const { env: { DB_URL_TEST }} = process
 const bcrypt = require('bcryptjs')
 
@@ -11,40 +12,61 @@ describe('logic - update user', () => {
     let name, surname, email, username, password, id, body
 
     beforeEach(async () => {
+
+        //first user
         name = `name-${Math.random()}`
         surname = `surname-${Math.random()}`
         username = `username-${Math.random()}`
         email = `email-${Math.random()}@domain.com`
         password = `password-${Math.random()}`
 
+        //info to change user
         body = {
             name: `name-${Math.random()}`,
             surname: `surname-${Math.random()}`,
             username: `username-${Math.random()}`,
             password: `password-${Math.random()}`,
             image: `image-${Math.random()}`
-
         }
-        
+
         const hash = await bcrypt.hash(password,10)
-            
+
+        //clean users in database    
         await User.deleteMany()
-            const user = await User.create({ name, surname, username, email, password: hash})
-            id = user.id
+
+        //create first user
+        const user = await User.create({ name, surname, username, email, password: hash })
+        
+        //keep user id created
+        id = user.id
     })
 
     it('should succeed on correct data', async () =>{
         const response = await updateUser(id, body)
-            expect(response).not.to.exist           
-            const user = await User.findById(id)           
-                expect(user).to.exist
-                expect(user.name).to.equal(body.name)
-                expect(user.surname).to.equal(body.surname)
-                expect(user.username).to.equal(body.username)
-                expect(user.email).to.equal(email)
-                expect(user.password).to.exist
-                expect(user.longitud).to.equal(body.longitud)
-                expect(user.latitude).to.equal(body.latitude)
+        
+        expect(response).not.to.exist           
+        
+        const user = await User.findById(id)  
+
+            expect(user).to.exist
+
+            expect(user.name).to.equal(body.name)
+            expect(user.id).to.be.a('string')
+
+            expect(user.surname).to.equal(body.surname)
+            expect(user.surname).to.be.a('string')
+
+            expect(user.username).to.equal(body.username)
+            expect(user.username).to.be.a('string')
+
+            expect(user.email).to.equal(email)
+            expect(user.email).to.be.a('string')
+
+            expect(user.image).to.equal(body.image)
+            expect(user.image).to.be.a('string')
+
+            expect(user.password).to.exist
+
     })
 
     it('should fail on non-existing user', async () => {
@@ -55,6 +77,7 @@ describe('logic - update user', () => {
            expect(message).to.equal(`User with id ${fakeid} does not exist.`)
         }
     }) 
+
     it('should fail on user id is not a string', async () => {
        try{
         await updateUser(123, body)
@@ -69,8 +92,7 @@ describe('logic - update user', () => {
            expect(message).to.equal('id is empty or blank')
         }
     }) 
-    it('should fail on name is not a string', async () => {
-       
+    it('should fail on name is not a string', async () => {       
         try{
         await updateUser(id, {name:123})
        }catch({ message }){
@@ -112,6 +134,5 @@ describe('logic - update user', () => {
            expect(message).to.equal('email non-modifiable')
         }
     })  
-
     after(() => database.disconnect())
 })

@@ -15,10 +15,12 @@ import Bye from '../Bye'
 import RateUser from '../RateUser'
 import ReviewsUser from '../ReviewsUser'
 
+
 export default withRouter(function ({ history }) {
   const [view, setView] = useState(logic.isUserLoggedIn() ? 'profile' || 'raters' || 'search' : undefined) 
   const [raters, setRaters] = useState()
   const [profile, setProfile] = useState()
+  const [ feedback, setFeedback] = useState()
   
 
 /* LOGIN - AUTHENTICATE - REGISTER */
@@ -33,24 +35,23 @@ export default withRouter(function ({ history }) {
     }
   }
 
- const handleGoToLogin = () =>{
+  const handleGoToLogin = () =>{
+      setView('login')
+      history.push('/login')
+    } 
 
-    setView('login')
-    history.push('/login')
-  } 
-
-const handleGoToRegister = ()=> {
-    setView('register')
-    history.push('/register')
-  } 
+  const handleGoToRegister = ()=> {
+      setView('register')
+      history.push('/register')
+    } 
 
   const handleRegister = async (name, surname,username, email, password) => {
     try {
       await logic.registerUser(name, surname, username, email, password)
 
       history.push('/login')
-    } catch ({ message }) {
-      console.log('fail register', message)
+    } catch ( error ) {
+      setFeedback(error.message)      
     }
   }
 

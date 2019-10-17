@@ -2,7 +2,6 @@ import registerUser from './register-user'
 import authenticateUser from './authenticate-user'
 import isUserLoggedIn from './is-user-logged-in'
 import logUserOut from './log-user-out'
-import retrieveUser from './retrieve-user'
 import retrieveUserProfile from './retrieve-user-profile'
 import getUserId from './get-user-id'
 import retrieveUsersGeo from './retrieve-users-geo'
@@ -25,7 +24,6 @@ export default {
     authenticateUser,
     isUserLoggedIn,
     logUserOut,
-    retrieveUser,
     retrieveUserProfile,
     getUserId,
     retrieveUsersGeo,

@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-import logic from '../../logic'
 import { withRouter } from 'react-router-dom'
 import Context from '../Context'
 
@@ -11,7 +10,7 @@ function Feedback({history, raterId}) {
         history.push(`/profile/${raterId}`)
     }
      return <>        
-        <h3 className = "comment">You have already made a rate</h3>
+        <h3 className = "comment"> You have already made a rate </h3>
         <a href="#" onClick={event => {
             event.preventDefault()
 

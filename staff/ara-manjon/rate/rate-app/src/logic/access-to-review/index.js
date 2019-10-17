@@ -1,6 +1,17 @@
-const REACT_APP_API_URL = process.env.REACT_APP_API_URL
+import { validate } from 'rate-utils'
 
+const REACT_APP_API_URL = process.env.REACT_APP_API_URL
+/**
+* Access to review a user.
+* 
+* @param {string} userIdToReview user id
+* 
+* @throws {Error} incorrect id introduced
+* 
+*/
 export default function (userIdToReview){
+
+    validate.string(userIdToReview, 'id')
 
     return (async () => {
         const response = await fetch(`${REACT_APP_API_URL}/access-review/${userIdToReview}`,{

@@ -1,10 +1,13 @@
 import React from 'react'
 import './index.sass'
+import FeedbackUser from '../FeedbackUser'
 
-export default function ({ goLogin, onRegister }) {
+export default function ({ goLogin, onRegister, feedback }) {
     return <>
         <div className= "landing">
         <h1 className="landing__title--form">Account</h1>
+        
+        <FeedbackUser message={feedback}/>
         
         <form className= "container-form" onSubmit={event => {
             event.preventDefault()

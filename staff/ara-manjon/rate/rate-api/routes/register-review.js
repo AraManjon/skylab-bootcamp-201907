@@ -2,7 +2,7 @@ const logic = require('../logic')
 
 module.exports = async (req, res) => {
     const { params:{ userToReviewId },userId, body: {comment, rate} } = req
-    debugger
+    
     try {
         
         await logic.registerReview(userId, userToReviewId, comment, rate)

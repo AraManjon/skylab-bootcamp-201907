@@ -39,6 +39,7 @@
   },
   "devDependencies": {
     "bcryptjs": "^2.4.3",
+    "rate-utils": "file:../rate-utils",
     "rate-data": "file:../rate-data"
   }
 }

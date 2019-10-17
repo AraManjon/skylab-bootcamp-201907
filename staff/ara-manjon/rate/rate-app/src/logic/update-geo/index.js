@@ -1,8 +1,14 @@
 import logic from '../../logic'
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
+/**
+* Update a user geolocation.
+* 
+*/
+
 export default function () {
     let latitude, longitude
+
     navigator.geolocation.getCurrentPosition(function (position) {
         latitude = position.coords.latitude
         longitude = position.coords.longitude

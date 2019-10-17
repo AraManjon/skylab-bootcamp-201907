@@ -1,12 +1,15 @@
 import React from 'react'
 import './index.sass'
+import FeedbackUser from '../FeedbackUser'
 
-export default function ({ goLogin, onRegister }) {
+export default function ({ goLogin, onRegister, feedback }) {
     return <>
         <div className= "landing">
         <h1 className="landing__title--form">Account</h1>
         
-        <form className= "container-form" id= "form1" onSubmit={event => {
+        <FeedbackUser message={feedback}/>
+        
+        <form className= "container-form" onSubmit={event => {
             event.preventDefault()
 
             const { target: { name: { value: name }, surname: { value: surname }, username: { value: username },email: { value: email }, password: { value: password } } } = event
@@ -36,7 +39,8 @@ export default function ({ goLogin, onRegister }) {
                 <input className= "inpt" type="password" name="password" placeholder="Required"/>
                 <label for="youridhere" className= "static-inpt">Password</label>
             </div>
-            <button></button>
+            <button className="container-form__title--medium">Sign up</button>
+
 
         </form>
         <p className= "container-form__title--slim">You have an account?</p><a className= "container-form__title--little" href="#" onClick={event => {
@@ -44,28 +48,7 @@ export default function ({ goLogin, onRegister }) {
 
             goLogin()
         }}>Sign in</a>
-
-        <div className="container-foot">
-        <button type="submit" className="container-foot__title--medium" form="form1">Sign up</button>
-        </div>
         
         </div> 
     </>
 }
-
-// .inpt
-//     border-top: 0.07rem solid $color-white
-//     background-color: none 
-//     height: 60px
-//     @extend %button-none
-//     @extend %text-link
-//     text-align: left
-//     color: $color-white
-//     font-size: 1.3rem
-
-// .inpt[text=text]
-//     color: $color-white
-// .inpt[type=submit]
-//     color: $color-white
-// \::placeholder
-//     color: $color-white

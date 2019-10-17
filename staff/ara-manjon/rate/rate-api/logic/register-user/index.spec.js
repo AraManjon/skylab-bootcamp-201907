@@ -10,32 +10,34 @@ const { env: { DB_URL_TEST }} = process
 describe('logic - register user', () => {
     before(() =>  database.connect(DB_URL_TEST))
   
-    let name, surname, username,email, password
+    let name, surname, username, email, password
     let _name, _surname, _username,_email, _password
+
     beforeEach(async () => {
+
+        //first user
         name = `name-${Math.random()}`
         surname = `surname-${Math.random()}`
         username = `username-${Math.random()}`
         email = `email-${Math.random()}@domain.com`
         password = `password-${Math.random()}`
 
-
-       
-
+        //second user
         _name = `name-${Math.random()}`
         _surname = `surname-${Math.random()}`
         _username = `username-${Math.random()}`
         _email = `email-${Math.random()}@domain.com`
         _password = `password-${Math.random()}`
 
+        //clean users in database
         await User.deleteMany()
     })
+
     it('should succeed on correct data', async () => {
         const result = await registerUser(name, surname, username, email, password)
             
         expect(result).not.to.exist
-        const user = await User.findOne({ email })
-    
+        const user = await User.findOne({ email })    
         expect(user).to.exist
         expect(user.name).to.equal(name)
         expect(user.surname).to.equal(surname)
@@ -43,22 +45,23 @@ describe('logic - register user', () => {
         expect(user.email).to.equal(email)
         expect(user.password).to.exist
     })
+
     it('should fail if the username is in use', async () =>{
         try{
             await User.create({ name, surname, username, email, password })
             await registerUser(_name, _surname, username, _email, _password)
        }catch(error){
            expect(error).to.exist
-           expect(error.message).to.equal('Username is in use')
+           expect(error.message).to.equal(`user with username ${username} already exist`)
        }
     })
-    it('should fail if the user already exists', async () =>{
+    it('should fail if the user email already exists', async () =>{
         try{
             await User.create({ name, surname, username, email, password })
             await registerUser(_name, _surname, _username, email, _password)
        }catch(error){
            expect(error).to.exist
-           expect(error.message).to.equal('User already exists.')
+           expect(error.message).to.equal(`user with e-mail ${email} already exist`)
        }
     })
 

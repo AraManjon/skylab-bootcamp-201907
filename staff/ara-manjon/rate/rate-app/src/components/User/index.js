@@ -6,7 +6,7 @@ import Context from '../Context'
 
 
 
- function User({ history, value }) {
+ function User({ history, value, type }) {
     const { view, setView, profile } = useContext(Context)
 
     const handleSubmit = event => {
@@ -50,9 +50,9 @@ import Context from '../Context'
         event.preventDefault()
 
         handleGoToProfile(value)
-    }}><img className="imgRedonda--little" src={value.image}></img></a>
+    }}><img className={ type === 'big' ?"imgRedonda":"imgRedonda--little"} src={value.image}></img></a>
     <div className="rate--little">{value.averageRate}</div>
-    <h4 className= "username--little">{value.username}</h4>    
+    <h4 className= "user--little">{value.username}</h4>    
     </>}
 
 {/* Profile User guest*/}
@@ -62,16 +62,16 @@ import Context from '../Context'
         
         
         handleGoToRating(value) 
-    }}><img className="imgRedonda--little" src={value.image}></img></a>
+    }}><img className={ type === 'big' ?"imgRedonda":"imgRedonda--little"} src={value.image}></img></a>
     <div className= "info-user-photo">
     <div className="rate-logged">{value.averageRate}</div>
-    <h4 className= "username-logged'">{value.username}</h4>
+    <h4 className= { type === 'big' ? "user-log":"info-user-photo"}>{value.username}</h4>
     </div>  
     </>}
 
 
 {/* User logged in without image*/}    
-    { logic.getUserId() === value.id && !value.image &&
+    { logic.getUserId() === value.id && type === 'big' && !value.image &&
     <> <form className= "charge-photo-form" method='post' onSubmit={handleSubmit} encType="multipart/form-data"> 
             <label className= "charge-photo-lbl">            
                 <input className= "charge-photo-inpt" type="file" name="logo" title="Image"></input>
@@ -80,17 +80,41 @@ import Context from '../Context'
         </form>
         <div className= "info-user-photo">
         {<div className="rate-logged">{value.averageRate}</div>}
-        {<p className="username-logged">{value.username}</p>}
+        {<p className="user-log">{value.username}</p>}
         </div>     
+    </> }
+
+    { logic.getUserId() === value.id && !value.image && type === 'little' &&
+    <> <a href= "" onClick={event =>{
+        event.preventDefault()
+
+        handleGoToProfile(value)
+    }}><img className={"imgRedonda--little"} src={value.image}></img></a>  
+
+
+
+
+
+
+
+
+        {/* <a>
+            
+            <div className= "imgRedonda--little"></div>     
+        </a> */}
+        <div className= "info-user-photo">
+        {<div className="rate-logged">{value.averageRate}</div>}
+        {<p className="user-little">{value.username}</p>}
+        </div>      
     </> }
 
 {/* User logged in with image*/} 
     {logic.getUserId() === value.id && value.image && 
     
-    <> <img src={value.image} className="imgRedonda"></img>
+    <> <img src={value.image} className={ type === 'big' ?"imgRedonda":"imgRedonda--little"}></img>
     <div className= "info-user-photo">
     <div className="rate-logged">{value.averageRate}</div>
-    <div className= "username-logged">{value.username}</div>
+    <h4 className={ type === 'big' ? "user-log":"info-user-photo"}>{value.username}</h4>
     </div>      
     </>}
     </>

@@ -5,33 +5,39 @@ import jwt from 'jsonwebtoken'
 
 const { User } = models
 
-// const { env: { DB_URL_TEST }} = process // WARN this destructuring doesn't work in react-app :(
 const REACT_APP_DB_URL_TEST = process.env.REACT_APP_DB_URL_TEST
 const REACT_APP_JWT_SECRET_TEST = process.env.REACT_APP_JWT_SECRET_TEST
 
 const { random } = Math
 
 describe('logic - authenticate user', () => {
+        
     beforeAll(() => database.connect(REACT_APP_DB_URL_TEST))
+    let name, surname, username, email, password, id
 
-    let name, surname, email, password, id
 
     beforeEach(async () => {
+
+        //first user
         name = `name-${random()}`
         surname = `surname-${random()}`
+        username = `username-${random()}`
         email = `email-${random()}@domain.com`
         password = `password-${random()}`
 
+        //clean users in database
         await User.deleteMany()
 
         const hash = await bcrypt.hash(password, 10)
-
-        const user = await User.create({ name, surname, email, password: hash })
-
+        
+        //create user
+        const user = await User.create({ name, surname, username, email, password: hash })
+        
         id = user.id
     })
 
     it('should succeed on correct data', async () => {
+
         const result = await logic.authenticateUser(email, password)
 
         expect(result).toBeUndefined()
@@ -44,6 +50,39 @@ describe('logic - authenticate user', () => {
         const { sub } = jwt.verify(__token__, REACT_APP_JWT_SECRET_TEST)
 
         expect(sub).toBe(id)
+    })
+    it('should fail on incorrect data', async ()=>{
+        let password = "fake-mail"
+        try {
+            await logic.authenticateUser(email, password)
+        } catch(error) {
+            expect(error).toBeDefined()
+        }
+    })
+    it('should fail on empty email', () => 
+        expect(() =>                
+            logic.authenticateUser('', password)
+        ).toThrow(Error, 'email is empty or blank')
+    )
+    it('should fail on emtpy password', () => {
+        expect(()=> 
+            logic.authenticateUser(email, '')
+        ).toThrow(Error, 'password is empty or blank')
+    })
+    it('should fail on non-valid email', () => {
+        expect(()=> 
+            logic.authenticateUser('asdf#adsf.com', password)
+        ).toThrow(Error, 'email with value asdf#adsf.com is not a valid e-mail')
+    })
+    it('should fail on non-string email', () => {
+        expect(()=> 
+            logic.authenticateUser(undefined, password)
+        ).toThrow(Error, 'email with value undefined is not a string')
+    })
+    it('should fail on non-string password', () => {
+        expect(()=> 
+            logic.authenticateUser(email, undefined)
+        ).toThrow(Error, 'password with value undefined is not a string')
     })
 
     afterAll(() => database.disconnect())

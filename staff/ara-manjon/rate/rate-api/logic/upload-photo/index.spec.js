@@ -21,13 +21,13 @@ describe('logic - upload image', () => {
             const user = await User.create({ name, surname, username, email, password})
             id = user.id
 
-            image = fs.createReadStream('test/josetas.jpg')
+            image = fs.createReadStream('test/image.jpg')
     })
     it('should succeed on correct image', async () => {
         const result = await updatePhoto(id, image)
         expect(result).not.to.exist
         const user = await User.findById(id)
-        debugger
+        
         expect(user).to.exist
         expect(user.image).to.exist
         expect(user.image).to.have.length.above(0)

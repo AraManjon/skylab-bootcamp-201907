@@ -17,10 +17,8 @@ const moment = require('moment')
  * 
  * @throws {Error} user have already rate
  * 
- * @returns {Promise} ron correct acces returns a promise
+ * @returns {Promise} on correct acces returns a promise
  */
-
-
 
 module.exports = function (UserId, UserIdtoReview) {
 
@@ -28,24 +26,30 @@ module.exports = function (UserId, UserIdtoReview) {
     validate.string(UserIdtoReview, 'id')
 
     return (async () => {
-        const user = await User.findOne({ _id: UserIdtoReview}, { password: 0 }).populate('reviews').lean()
+
+        //find user to review
+        const user = await User.findOne({ _id: UserIdtoReview}, { password: 0, __v: 0 }).populate('reviews').lean()
+        if (!user) throw new Error(`user with id ${UserIdtoReview} does not exist`)
+        //clean user id
         user.id = user._id.toString()
         delete user._id 
-        debugger
-
-        if (!user) throw new Error(`user with id ${UserIdtoReview} does not exist`)
+        
 
         let reviewsUser= user.reviews.map(review=>{
+            //clean user review
             review.id = review._id.toString()
-            delete review._id 
+            delete review._id
 
+            //clean user review author
             review.author.id = review.author._id.toString()
             delete review.author._id
             delete review.author.__v
             return user
         })
-        
+
+        //checks if user just reviwed 
         reviewsUser.forEach((item, index) => {
+
             if(item.reviews[index].author.id === UserId){
                 const createAt= moment(item.date)
                 const getValidFrom= moment(new Date().toString())

@@ -1,18 +1,25 @@
-require('dotenv').config()
-const { expect } = require('chai')
-const retrieveReviews = require('.')
-const { database, models: { User, Review } } = require('rate-data')
+import logic from '..'
+import { database, models } from 'rate-data'
 
-const { env: { DB_URL_TEST }} = process
+const { random } = Math
+const { User, Review } = models
+
+import jwt from 'jsonwebtoken'
+
+const REACT_APP_DB_URL_TEST = process.env.REACT_APP_DB_URL_TEST
+const REACT_APP_JWT_SECRET_TEST = process.env.REACT_APP_JWT_SECRET_TEST
+
 
 describe('logic - retrieve review',() => {
-    before(() => database.connect(DB_URL_TEST))
+    beforeAll(() => database.connect(REACT_APP_DB_URL_TEST))
 
     let name, surname, username, email, password, id, review
     let name1, surname1, username1,  email1, password1
     let name2, surname2, username2,  email2, password2
     let name3, surname3, username3,  email3, password3
     let user, user1, user2, user3
+    let id1, id2, id3
+    let comment, response, rate, date, review2
     
     beforeEach(async () => {
         //user
@@ -58,11 +65,16 @@ describe('logic - retrieve review',() => {
 
         user3 = await User.create({ name: name3, surname: surname3, username: username3, email: email3, password: password3 })        
         id3 = user3.id
+
+        const token = jwt.sign({ sub: id }, REACT_APP_JWT_SECRET_TEST)
+
+        logic.__token__ = token
+
         
         //info review
-        comment=`comment-${Math.random()}`
-        response=`response-${Math.random()}`
-        rate=`${Math.random()}`
+        comment=`comment-${random()}`
+        response=`response-${random()}`
+        rate= 2
         date= new Date
         
         //clean reviews in database
@@ -82,59 +94,23 @@ describe('logic - retrieve review',() => {
 
     it('should succeed on correct retrieve reviews', async() => {
 
-        const results = await retrieveReviews(id)
-        expect(results).to.exist          
-        expect(results.length).to.equal(2)
+        const results = await logic.retrieveReviews()
+        expect(results).toBeDefined()         
+        expect(results.length).toEqual(2)
 
         results.forEach((result, index)=>{
-            expect(result).to.exist
-            expect(result.rate).to.exist
-            expect(result.comment).to.exist
-            expect(result.date).to.exist
-            expect(result.author.id).to.equal(id)
+            expect(result).toBeDefined()
+            expect(result.rate).toBeDefined()
+            expect(result.rate).toEqual(rate)
+            expect(result.comment).toBeDefined()
+            expect(result.comment).toEqual(comment)
+            expect(result.date).toBeDefined()
+
+            expect(result.author).toBeDefined()
                           
         })
-        expect(results[0].owner.id).to.equal(user1.id)
-        expect(results[1].owner.id).to.equal(user2.id)            
+        expect(results[0].owner.id).toEqual(user1.id)
+        expect(results[1].owner.id).toEqual(user2.id)            
     })
-    it('should fail on empty user id', async ()=>{
-        try {
-            await retrieveReviews('')
-        } catch({message}) {
-            expect(message).to.equal('id is empty or blank')
-        }
-    })
-
-    it('should fail on user id does not exist', async ()=>{
-        const fakeid = '5e711645a4734dc78985edb0'
-        try {
-            await retrieveReviews(fakeid)
-        } catch({message}) {
-            expect(message).to.equal(`user with id ${fakeid} does not exist`)
-        }
-    })
-
-    it('should fail on empty user id', async ()=>{
-        try {
-            const result = await retrieveReviews(user2.id)
-        } catch({message}) {
-            expect(message).to.equal(`user with id ${user2.id} does not author any review.`)
-        }
-    })
-    it('should fail on undefined user id', async () => {
-        userId = undefined
-        try {
-            await retrieveReviews(userId)
-        } catch({message}) {
-            expect(message).to.equal('id with value undefined is not a string')
-        }
-    })
-        it('should fail on wrong id user data type', async () => {
-            userId = 123
-            try {
-                await retrieveReviews(userId)
-            } catch({message}) {
-                expect(message).to.equal('id with value 123 is not a string')
-            }
-        })
+        afterAll(() => database.disconnect())
 })

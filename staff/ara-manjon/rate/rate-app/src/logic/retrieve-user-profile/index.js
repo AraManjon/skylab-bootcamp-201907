@@ -1,9 +1,19 @@
-
+import { validate } from 'rate-utils'
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
+/**
+* Retrieve a user by id.
+* 
+* @param {string} id user id
+* 
+* @throws {Error} incorrect id introduced
+* 
+*/
+
 export default function (id) {
-    // validate fields
+
+    validate.string(id, 'id')
 
     return (async () => {
         const response = await fetch(`${REACT_APP_API_URL}/users/${id}`, {
@@ -14,9 +24,10 @@ export default function (id) {
         })
         
         if (response.status !== 200) {
-            const { error } = await response.json()
 
-            throw Error(error)
+             const { error } = await response.json()
+
+             throw Error(error)
         }
 
         const { user } = await response.json()

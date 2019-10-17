@@ -1,6 +1,13 @@
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
+/**
+* Retrieve reviews by user id.
+* 
+* @throws {Error} incorrect values introduced
+* 
+*/
+
 export default function () {
 
     return (async () => {

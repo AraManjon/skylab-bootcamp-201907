@@ -6,7 +6,7 @@ export default function ({ goRegister, onLogin }) {
 
         <h1 className="landing__title--form">Activate RATE</h1>
 
-        <form className= "container-form" id= "form1" onSubmit={event => {
+        <form className= "container-form" onSubmit={event => {
             event.preventDefault()
 
             const { target: { email: { value: email }, password: { value: password } } } = event
@@ -22,7 +22,8 @@ export default function ({ goRegister, onLogin }) {
                 <input className= "inpt" type="password" name="password" placeholder="Required"/>
                 <label for="youridhere" className= "static-inpt">Password</label>
             </div>
-            <button></button>
+           
+        <button className="container-form__title--medium">Sign in</button>
            
         </form>
         <p className= "container-form__title--slim">Create an account</p><a className= "container-form__title--little" href="#" onClick={event => {
@@ -31,9 +32,9 @@ export default function ({ goRegister, onLogin }) {
             goRegister()
         }}>Sign up</a>
 
-        <div className="container-foot">
-        <button type="submit" className="container-foot__title--medium" form="form1">Sign in</button>
-        </div>
+        {/* <div className="container-foot">
+        </div> */}
+
         </div> 
     </>
 }

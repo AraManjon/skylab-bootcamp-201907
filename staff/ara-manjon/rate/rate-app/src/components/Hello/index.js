@@ -6,13 +6,11 @@ function Hello({ goRegister }) {
   return <div className= "landing">
             <h1 className="landing__title">Hello</h1>
             <div className = "container-foot">
-              <label className= "switch" for="checkbox">
-                <input id= "checkbox" type="checkbox" onChange={ event =>{
-                  
+                <a href="#" className="container-form__title--medium" onClick={ event =>{
+                  event.preventDefault()
                   goRegister()
-                }}/>
-                <div className="slider"></div>
-              </label>
+                }}>Start to Rate</a>
+
             </div>
          </div>
 }

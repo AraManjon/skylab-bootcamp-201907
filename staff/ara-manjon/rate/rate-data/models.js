@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const { user, review, response, nears } = require('./schemas')
+const { user, review, response } = require('./schemas')
 
 module.exports = {
     User: mongoose.model('User', user),
